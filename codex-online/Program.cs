@@ -2,7 +2,6 @@
 
 namespace codex_online
 {
-#if WINDOWS || LINUX
     /// <summary>
     /// The main class.
     /// </summary>
@@ -18,5 +17,4 @@ namespace codex_online
                 game.Run();
         }
     }
-#endif
 }
