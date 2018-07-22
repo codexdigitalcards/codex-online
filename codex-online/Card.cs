@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Ruge.DragonDrop;
+using MonoGameDragAndDrop.DragonDrop;
 using System;
 
 public class Card : IDragonDropItem

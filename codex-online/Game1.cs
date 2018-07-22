@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Ruge.DragonDrop;
-using MonoGame.Ruge.ViewportAdapters;
+using MonoGameDragAndDrop.DragonDrop;
+using MonoGameDragAndDrop.ViewportAdapters;
 using Nez;
 using Nez.Sprites;
 
