@@ -3,9 +3,9 @@ using System;
 
 namespace codex_online
 {
-    class Patroll : Zone
+    class Patrol : Zone
     {
-        public Patroll(Vector2 position, int height, int width) : base (position, height, width)
+        public Patrol(Vector2 position, int height, int width) : base (position, height, width)
         {
             
         }

@@ -42,11 +42,12 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="_Scripts\Parent Classes\Card.cs" />
-    <Compile Include="_Scripts\Zones\Patroll.cs" />
-    <Compile Include="_Scripts\Parent Classes\Zone.cs" />
-    <Compile Include="_Scripts\Parent Classes\Game1.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Scripts\MouseCollider.cs" />
+    <Compile Include="Scripts\Card.cs" />
+    <Compile Include="Scripts\Zones\Patrol.cs" />
+    <Compile Include="Scripts\Zones\Zone.cs" />
+    <Compile Include="Scripts\Game1.cs" />
+    <Compile Include="Scripts\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +116,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bg.jpg" />
     <Content Include="Content\card-back.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
