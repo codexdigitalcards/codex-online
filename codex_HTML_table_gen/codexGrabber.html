@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Codex Grabber</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="script/codex.js"></script>
+    <style>
+        #myProgress {
+            width: 100%;
+            background-color: #ddd;
+        }
+
+        #myBar {
+            width: 0%;
+            height: 30px;
+            background-color: #4CAF50;
+            text-align: left;
+            line-height: 30px;
+            color: white;
+        }
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+        td {
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+    <div id="myProgress">
+        <div id="myBar">0/330 Cards Loaded</div>
+    </div>
+
+    <select name="cardSelect" id="cardSelect"></select>
+
+    <button name="export" type="button" onclick="export_table_to_csv('Codex Cards.csv');">Export to CSV</button>
+    <button name="button" type="button" onclick="getImages();">Get Images</button>
+    <button name="button" type="button" onclick="exportImages();">Export Images</button>
+
+    <table id="cardsTable">
+        <tr>
+            <th>Card Name</th>
+            <th>Color</th>
+            <th>Spec</th>
+            <th>Tech</th>
+            <th>Type</th>
+            <th>Sub-Type</th>
+            <th>Cost</th>
+            <th>Attack</th>
+            <th>HP</th>
+            <th>Keywords</th>
+            <th>Rules Text</th>
+            <th>Flavor Text</th>
+        </tr>
+    </table>
+
+    <article></article>
+</body>
+</html>
