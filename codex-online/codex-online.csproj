@@ -44,7 +44,10 @@
   <ItemGroup>
     <Compile Include="Scripts\MouseCollider.cs" />
     <Compile Include="Scripts\Card.cs" />
-    <Compile Include="Scripts\Zones\Patrol.cs" />
+    <Compile Include="Scripts\Ui\CardUi.cs" />
+    <Compile Include="Scripts\Ui\HandUi.cs" />
+    <Compile Include="Scripts\Ui\ZoneUi.cs" />
+    <Compile Include="Scripts\Zones\Hand.cs" />
     <Compile Include="Scripts\Zones\Zone.cs" />
     <Compile Include="Scripts\Game1.cs" />
     <Compile Include="Scripts\Program.cs" />
@@ -117,9 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bg.jpg" />
-    <Content Include="Content\card-back.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Content\jack-of-hearts.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

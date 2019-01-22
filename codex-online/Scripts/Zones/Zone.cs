@@ -1,22 +1,33 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Nez;
+using System;
 using System.Collections.Generic;
 
 namespace codex_online
 {
-    abstract class Zone
+
+    /// <summary>
+    /// Represents a zone in the game
+    /// A grouping of cards
+    /// </summary>
+    public abstract class Zone : Component
     {
-        //Zone Properties
-        protected Vector2 Position { get; set; }
-        protected int Height { get; set; }
-        protected int Width { get; set; }
-        public List<Card> cards;
-        
-        public Zone(Vector2 position, int height, int width)
+        protected ICollection<Card> Cards;
+        public event EventHandler CardsUpdated;
+
+
+        /// <summary>
+        /// Does something when Cards is updated depending on the value of CardsUpdated
+        /// </summary>
+        protected virtual void OnCardsUpdated()
         {
-            
+            CardsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
-        public abstract void CardDisplayMode();
+
+        /// <summary>
+        /// Creates a copy of Cards
+        /// </summary>
+        /// <returns>A copy of Cards</returns>
+        public abstract ICollection<Card> GetCardsCopy();
     }
 }
