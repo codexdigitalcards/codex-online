@@ -1,5 +1,4 @@
-﻿using Nez;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace codex_online
@@ -9,11 +8,10 @@ namespace codex_online
     /// Represents a zone in the game
     /// A grouping of cards
     /// </summary>
-    public abstract class Zone : Component
+    public abstract class Zone
     {
         protected ICollection<Card> Cards;
         public event EventHandler CardsUpdated;
-
 
         /// <summary>
         /// Does something when Cards is updated depending on the value of CardsUpdated
@@ -22,7 +20,6 @@ namespace codex_online
         {
             CardsUpdated?.Invoke(this, EventArgs.Empty);
         }
-
 
         /// <summary>
         /// Creates a copy of Cards

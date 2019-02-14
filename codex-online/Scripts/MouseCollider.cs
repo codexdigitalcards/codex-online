@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
+using System.Collections.Generic;
 
 namespace codex_online
 {
@@ -11,41 +12,80 @@ namespace codex_online
     /// </summary>
     class MouseCollider : BoxCollider, IUpdatable
     {
-        public static int PickedUpRenderLayer = -1;
-        public static int DefaultRenderLayer = 0;
+        public static int PickedUpRenderLayer { get; } = -1;
+        public static int DefaultRenderLayer { get; } = 0;
 
-        private bool isDragging;
-        private CardUi draggedCard;
-        private Vector2 dragOffsetPosition;
-        
+        protected bool Dragging { get; set; } = false;
+        protected CardUi DraggedCard { get; set; } = null;
+        protected Vector2 DragOffsetPosition { get; set; } = Vector2.Zero;
+
+        private readonly static float LowestLayerDepth = 2;
+
         public void update()
         {
-            entity.setPosition(Input.mousePosition);
-            CollisionResult collisionResult;
+            if (!AnimationHandler.IsAnimationRunning())
+            {
+                entity.setPosition(Input.mousePosition);
+                CardUi topCard = null;
+                BoardAreaUi clickedBoardArea = null;
+                float topLayerDepth = LowestLayerDepth;
+                IEnumerable<Collider> neighbors = Physics.boxcastBroadphaseExcludingSelf(this, collidesWithLayers);
 
-            if (!isDragging && Input.leftMouseButtonPressed)
-            {
-                //TODO: collide with top card if there are multiple options
-                collidesWithAny(out collisionResult);
-                Collider collider = collisionResult.collider;
-                if (collider != null && collider.entity is CardUi)
+                if (!Dragging && Input.leftMouseButtonPressed)
                 {
-                    draggedCard = (CardUi)collider.entity;
-                    dragOffsetPosition = draggedCard.position - Input.mousePosition;
-                    draggedCard.getComponent<Sprite>().renderLayer = PickedUpRenderLayer;
-                    isDragging = true;
+                    foreach (var neighbor in neighbors)
+                    {
+                        CollisionResult collisionResult = new CollisionResult();
+                        if (neighbor.isTrigger)
+                        {
+                            continue;
+                        }
+
+                        if (collidesWith(neighbor, out collisionResult))
+                        {
+                            Entity collidedEntity = collisionResult.collider.entity;
+
+                            if (collidedEntity is CardUi)
+                            {
+                                float currentLayerDepth;
+                                currentLayerDepth = collisionResult.collider.entity.getComponent<Sprite>().layerDepth;
+
+                                if (currentLayerDepth < topLayerDepth)
+                                {
+                                    topCard = (CardUi)collidedEntity;
+                                    topLayerDepth = currentLayerDepth;
+                                }
+                            }
+                            else if (collidedEntity is BoardAreaUi)
+                            {
+                                clickedBoardArea = (BoardAreaUi)collidedEntity;
+                            }
+                        }
+                    }
+
+                    if (topCard != null)
+                    {
+                        DraggedCard = topCard;
+                        DragOffsetPosition = DraggedCard.position - Input.mousePosition;
+                        DraggedCard.getComponent<Sprite>().renderLayer = PickedUpRenderLayer;
+                        Dragging = true;
+                    }
+                    else if (clickedBoardArea != null)
+                    {
+
+                    }
                 }
-            }
-            else if (isDragging && Input.leftMouseButtonDown)
-            {
-                //TODO: check zone colliding with
-                collidesWithAny(out collisionResult);
-                draggedCard.position = Input.mousePosition + dragOffsetPosition;
-            }
-            else if (isDragging && !Input.leftMouseButtonDown)
-            {
-                draggedCard.getComponent<Sprite>().renderLayer = DefaultRenderLayer;
-                isDragging = false;
+                else if (Dragging && Input.leftMouseButtonDown)
+                {
+                    //TODO: check zone colliding with
+                    //collidesWithAny(out collisionResult);
+                    DraggedCard.position = Input.mousePosition + DragOffsetPosition;
+                }
+                else if (Dragging && !Input.leftMouseButtonDown)
+                {
+                    DraggedCard.getComponent<Sprite>().renderLayer = DefaultRenderLayer;
+                    Dragging = false;
+                }
             }
         }
     }

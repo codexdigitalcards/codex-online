@@ -82,9 +82,9 @@ namespace codex_online
             handUi.Add(cards);
 
             //remove from hand test
-            List<CardUi> cardsToRemove = new List<CardUi>(new CardUi[] { cards[0], cards[7] });
-            handUi.Remove(cardsToRemove);
-            cardsToRemove.ForEach(card => card.destroy());
+            //List<CardUi> cardsToRemove = new List<CardUi>(new CardUi[] { cards[0], cards[7] });
+            //handUi.Remove(cardsToRemove);
+            //cardsToRemove.ForEach(card => card.destroy());
         }
     }
 }
