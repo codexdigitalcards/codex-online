@@ -12,7 +12,6 @@ namespace codex_online
         protected ICollection<Card> Cards;
         public event EventHandler CardsUpdated;
 
-
         /// <summary>
         /// Does something when Cards is updated depending on the value of CardsUpdated
         /// </summary>
@@ -20,7 +19,6 @@ namespace codex_online
         {
             CardsUpdated?.Invoke(this, EventArgs.Empty);
         }
-
 
         /// <summary>
         /// Creates a copy of Cards

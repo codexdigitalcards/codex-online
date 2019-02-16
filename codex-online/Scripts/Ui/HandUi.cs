@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Nez;
 using Nez.Sprites;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,10 @@ using System.Linq;
 
 namespace codex_online
 {
+
+    /// <summary>
+    /// UI representation of Hand. Controls movement of cards in the Hand zone
+    /// </summary>
     public class HandUi : ZoneUi
     {
         private static readonly float layerDepthIncriment = .0001f;
@@ -15,6 +20,9 @@ namespace codex_online
         public static float SecondsToMove { get; } = 3;
 
         protected List<CardUi> Cards { get; } = new List<CardUi>();
+        protected Dictionary<CardUi, Vector2> CardSpeeds { get; } = new Dictionary<CardUi, Vector2>();
+        protected float TimeMoving { get; set; } = 0;
+        protected bool Animating { get; set; } = false; 
         protected Hand HandZone {
             get
             {
@@ -93,6 +101,9 @@ namespace codex_online
         /// </summary>
         protected virtual void OrganizeHand()
         {
+            AnimationHandler.AddAnimation();
+            TimeMoving = SecondsToMove;
+            Animating = true;
             if (Cards.Count <= MaxHandSizeBeforeOverlap)
             {
                 for (int i = 0; i < Cards.Count; i++)
@@ -123,8 +134,35 @@ namespace codex_online
         protected virtual void MoveToPositionInHand(CardUi cardEntity, int index, float distanceBetweenCards)
         {
             Vector2 destination = new Vector2(distanceBetweenCards * index + position.X - HandWidth / 2 + CardUi.CardWidth / 2, position.Y);
-            cardEntity.TimeMoving = SecondsToMove;
-            cardEntity.Velocity = (destination - cardEntity.position) / SecondsToMove;
+            CardSpeeds[cardEntity] = (destination - cardEntity.position) / SecondsToMove;
+        }
+
+        public override void update()
+        {
+            base.update();
+
+            if (Animating)
+            {
+                if (TimeMoving > Time.deltaTime)
+                {
+                    foreach (KeyValuePair<CardUi, Vector2> cardSpeedPair in CardSpeeds)
+                    {
+                        cardSpeedPair.Key.position += cardSpeedPair.Value * Time.deltaTime;
+                    }
+                    TimeMoving -= Time.deltaTime;
+                }
+                else
+                {
+                    foreach (KeyValuePair<CardUi, Vector2> cardSpeedPair in CardSpeeds)
+                    {
+                        cardSpeedPair.Key.position += cardSpeedPair.Value * TimeMoving;
+                    }
+                    TimeMoving = 0;
+                    CardSpeeds.Clear();
+                    AnimationHandler.EndAnimation();
+                    Animating = false;
+                }
+            }
         }
     }
 }
