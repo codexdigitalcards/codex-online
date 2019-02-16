@@ -8,7 +8,7 @@ namespace codex_online
 {
     public class HandUi : ZoneUi
     {
-        private static readonly float LayerDepthIncriment = .0001f;
+        private static readonly float layerDepthIncriment = .0001f;
 
         public static int MaxHandSizeBeforeOverlap { get; } = 5;
         public static float HandWidth { get; } = CardUi.CardWidth * MaxHandSizeBeforeOverlap;
@@ -107,7 +107,7 @@ namespace codex_online
                 for (int i = 0; i < Cards.Count; i++)
                 {
                     CardUi cardEntity = Cards[i];
-                    cardEntity.getComponent<Sprite>().layerDepth = 1 - (i * LayerDepthIncriment);
+                    cardEntity.getComponent<Sprite>().layerDepth = 1 - (i * layerDepthIncriment);
                     MoveToPositionInHand(cardEntity, i, distanceBetweenCards);
                 }
             }

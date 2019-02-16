@@ -2,7 +2,7 @@
 
 namespace codex_online
 {
-    
+    //TODO: Make sure Cards is not null
     /// <summary>
     /// Zone that represents a player's hand
     /// </summary>

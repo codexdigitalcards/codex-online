@@ -16,14 +16,13 @@ namespace codex_online
         public static int ScreenWidth { get; } = 1366;
         public static int ScreenHeight { get; } = 768;
 
-        private static readonly string BoardTextureName = "board";
-        private static readonly string BoardEntityName = "board";
-        private static readonly string MouseColliderEntityName = "mouse-collider";
-        private static readonly string HandTextureName = "hand-holder";
+        private static readonly string boardTextureName = "board";
+        private static readonly string boardEntityName = "board";
+        private static readonly string mouseColliderEntityName = "mouse-collider";
+        private static readonly string handTextureName = "hand-holder";
 
         public Game1() : base(width: ScreenWidth, height: ScreenHeight, isFullScreen: false, enableEntitySystems: false){}
-
-
+        
         /// <summary>
         /// Initialize game
         /// </summary>
@@ -35,18 +34,18 @@ namespace codex_online
             Scene myScene = Scene.createWithDefaultRenderer(Color.CornflowerBlue);
 
             //background
-            Texture2D backgroundTexture = myScene.content.Load<Texture2D>(BoardTextureName);
-            Entity background = myScene.createEntity(BoardEntityName);
+            Texture2D backgroundTexture = myScene.content.Load<Texture2D>(boardTextureName);
+            Entity background = myScene.createEntity(boardEntityName);
             background.addComponent(new Sprite(backgroundTexture));
             background.setPosition(new Vector2(backgroundTexture.Width / 2, backgroundTexture.Height / 2));
             background.getComponent<Sprite>().renderLayer = BoardRenderLayer;
 
             //mouse collider to check what mouse is touching
-            Entity mouseCollider = myScene.createEntity(MouseColliderEntityName);
+            Entity mouseCollider = myScene.createEntity(mouseColliderEntityName);
             mouseCollider.addComponent(new MouseCollider());
 
             HandUi handUi = new HandUi(new Hand());
-            Texture2D handTexture = myScene.content.Load<Texture2D>(HandTextureName);
+            Texture2D handTexture = myScene.content.Load<Texture2D>(handTextureName);
             handUi.addComponent(new Sprite(handTexture));
             handUi.getComponent<Sprite>().renderLayer = BoardRenderLayer;
             myScene.addEntity(handUi);
