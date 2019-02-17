@@ -31,34 +31,43 @@ namespace codex_online
             //initialize scene
             base.Initialize();
             Window.AllowUserResizing = true;
-            Scene myScene = Scene.createWithDefaultRenderer(Color.CornflowerBlue);
+            Scene inGameScene = Scene.createWithDefaultRenderer(Color.CornflowerBlue);
 
+            //fonts
+            SpriteFont baseFont = inGameScene.content.Load<SpriteFont>("Arial");
+            
             //background
-            Texture2D backgroundTexture = myScene.content.Load<Texture2D>(boardTextureName);
-            Entity background = myScene.createEntity(boardEntityName);
+            Texture2D backgroundTexture = inGameScene.content.Load<Texture2D>(boardTextureName);
+            Entity background = inGameScene.createEntity(boardEntityName);
             background.addComponent(new Sprite(backgroundTexture));
             background.setPosition(new Vector2(backgroundTexture.Width / 2, backgroundTexture.Height / 2));
             background.getComponent<Sprite>().renderLayer = BoardRenderLayer;
+            
+            //Your base
+            Base gameBase = new Base();
+            BaseUi baseUi = new BaseUi(baseFont, gameBase);            
+            baseUi.setPosition(new Vector2(300f, 300f));
+            inGameScene.addEntity(baseUi);
 
             //mouse collider to check what mouse is touching
-            Entity mouseCollider = myScene.createEntity(mouseColliderEntityName);
+            Entity mouseCollider = inGameScene.createEntity(mouseColliderEntityName);
             mouseCollider.addComponent(new MouseCollider());
 
             HandUi handUi = new HandUi(new Hand());
-            Texture2D handTexture = myScene.content.Load<Texture2D>(handTextureName);
+            Texture2D handTexture = inGameScene.content.Load<Texture2D>(handTextureName);
             handUi.addComponent(new Sprite(handTexture));
             handUi.getComponent<Sprite>().renderLayer = BoardRenderLayer;
-            myScene.addEntity(handUi);
+            inGameScene.addEntity(handUi);
             
             //test cards
             List<CardUi> cards = new List<CardUi>();
-            Texture2D cardTexture = myScene.content.Load<Texture2D>("jack-of-hearts");
+            Texture2D cardTexture = inGameScene.content.Load<Texture2D>("Cards/Black/black_starter_T0_03_thieving_imp");
             for (int x = 1; x <= 8; x++)
             {
                 CardUi jackOfHearts = new CardUi(new Card(), cardTexture);
                 jackOfHearts.setScale(.5f);
                 jackOfHearts.setPosition(50 * x, 50 * x);
-                myScene.addEntity(jackOfHearts);
+                inGameScene.addEntity(jackOfHearts);
 
                 cards.Add(jackOfHearts);
             }
@@ -75,7 +84,7 @@ namespace codex_online
                 cards[n] = value;
             }
 
-            scene = myScene;
+            scene = inGameScene;
 
             //add to hand test
             handUi.Add(cards);

@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
+
+    /// <summary>
+    /// Tracks animations currently running
+    /// </summary>
     public static class AnimationHandler
     {
         private static int AnimationsRunning = 0;

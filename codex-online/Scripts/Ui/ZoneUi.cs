@@ -1,6 +1,4 @@
-﻿using Nez;
-
-namespace codex_online
+﻿namespace codex_online
 {
 
     /// <summary>

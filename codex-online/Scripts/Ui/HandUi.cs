@@ -42,7 +42,7 @@ namespace codex_online
         public HandUi(Hand hand)
         {
             HandZone = hand;
-            HandZone.CardsUpdated += HandUpdated;
+            HandZone.Updated += HandUpdated;
             position = new Vector2(Game1.ScreenWidth / 2, Game1.ScreenHeight - CardUi.CardHeight / 2);
         }
 
