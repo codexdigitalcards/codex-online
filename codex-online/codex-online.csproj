@@ -45,10 +45,13 @@
     <Compile Include="Scripts\AnimationHandler.cs" />
     <Compile Include="Scripts\MouseCollider.cs" />
     <Compile Include="Scripts\Card.cs" />
+    <Compile Include="Scripts\Ui\BaseUi.cs" />
     <Compile Include="Scripts\Ui\BoardAreaUi.cs" />
     <Compile Include="Scripts\Ui\CardUi.cs" />
     <Compile Include="Scripts\Ui\HandUi.cs" />
     <Compile Include="Scripts\Ui\ZoneUi.cs" />
+    <Compile Include="Scripts\Zones\Base.cs" />
+    <Compile Include="Scripts\Zones\BoardArea.cs" />
     <Compile Include="Scripts\Zones\Hand.cs" />
     <Compile Include="Scripts\Zones\Zone.cs" />
     <Compile Include="Scripts\Game1.cs" />
@@ -136,9 +139,6 @@
       <Project>{60b7197d-d0d5-405c-90a2-a56903e9b039}</Project>
       <Name>Nez</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\jack-of-hearts.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
