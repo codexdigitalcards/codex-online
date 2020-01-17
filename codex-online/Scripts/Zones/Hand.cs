@@ -8,6 +8,11 @@ namespace codex_online
     /// </summary>
     public class Hand : Zone
     {
+        public Hand()
+        {
+            Cards = new List<Card>();
+        }
+
         public override ICollection<Card> GetCardsCopy()
         {
             return new HashSet<Card>(Cards);

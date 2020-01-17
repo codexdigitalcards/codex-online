@@ -21,8 +21,10 @@ namespace codex_online
 
         protected List<CardUi> Cards { get; } = new List<CardUi>();
         protected Dictionary<CardUi, Vector2> CardSpeeds { get; } = new Dictionary<CardUi, Vector2>();
+        protected Dictionary<CardUi, float> PreviousScale { get; } = new Dictionary<CardUi, float>();
         protected float TimeMoving { get; set; } = 0;
-        protected bool Animating { get; set; } = false; 
+        protected bool Animating { get; set; } = false;
+        
         protected Hand HandZone {
             get
             {
@@ -46,29 +48,6 @@ namespace codex_online
             position = new Vector2(Game1.ScreenWidth / 2, Game1.ScreenHeight - CardUi.CardHeight / 2);
         }
 
-
-        /// <summary>
-        /// Move cards to this hand
-        /// </summary>
-        /// <param name="cards">cards to add</param>
-        public virtual void Add(List<CardUi> cards)
-        {
-            Cards.AddRange(cards);
-            OrganizeHand();
-        }
-
-        /// <summary>
-        /// Allow another zone to handle these cards
-        /// </summary>
-        /// <param name="cards">cards to remove</param>
-        public virtual void Remove(List<CardUi> cards)
-        {
-            cards.ForEach(card => card.getComponent<Sprite>().layerDepth = 0);
-            Cards.RemoveAll(card => cards.Contains(card));
-            OrganizeHand();
-        }
-
-
         /// <summary>
         /// When Hand zone is updated moves/removes cards away from hand
         /// to match the changes
@@ -77,22 +56,23 @@ namespace codex_online
         /// <param name="e"></param>
         protected virtual void HandUpdated(object sender, EventArgs e)
         {
-            ICollection<Card> currentHand = HandZone.GetCardsCopy();
-            List<CardUi> cardsDifference = new List<CardUi>(
-                Cards.Except(
-                    currentHand
-                        .Select(cardComponent => CardUi.CardToCardUiMap[cardComponent])
-                )
-            );
+            ICollection<Card> currentCards = HandZone.GetCardsCopy();
+            IEnumerable<CardUi> currentCardUis = currentCards.Select(cardComponent => CardUi.CardToCardUiMap[cardComponent]);
 
-            if (Cards.Count > currentHand.Count)
+            List<CardUi> removedCards = new List<CardUi>(Cards.Except(currentCardUis));
+            foreach (CardUi card in removedCards)
             {
-                Remove(cardsDifference);
+                card.getComponent<Sprite>().layerDepth = 0;
+                Cards.Remove(card);
             }
-            else if (Cards.Count < currentHand.Count)
+
+            IEnumerable<CardUi> addedCards = new List<CardUi>(currentCardUis.Except(Cards));
+            foreach (CardUi card in addedCards)
             {
-                Add(cardsDifference);
+                Cards.Add(card);
             }
+
+            OrganizeHand();
         }
 
 
@@ -104,6 +84,11 @@ namespace codex_online
             AnimationHandler.AddAnimation();
             TimeMoving = SecondsToMove;
             Animating = true;
+
+            foreach (CardUi card in Cards)
+            {
+                PreviousScale[card] = card.scale.X;
+            }
             if (Cards.Count <= MaxHandSizeBeforeOverlap)
             {
                 for (int i = 0; i < Cards.Count; i++)
@@ -147,7 +132,9 @@ namespace codex_online
                 {
                     foreach (KeyValuePair<CardUi, Vector2> cardSpeedPair in CardSpeeds)
                     {
-                        cardSpeedPair.Key.position += cardSpeedPair.Value * Time.deltaTime;
+                        CardUi card = cardSpeedPair.Key;
+                        card.position += cardSpeedPair.Value * Time.deltaTime;
+                        card.setScale(card.scale.X + (1 - PreviousScale[card]) * (Time.deltaTime / SecondsToMove));
                     }
                     TimeMoving -= Time.deltaTime;
                 }
@@ -155,7 +142,9 @@ namespace codex_online
                 {
                     foreach (KeyValuePair<CardUi, Vector2> cardSpeedPair in CardSpeeds)
                     {
-                        cardSpeedPair.Key.position += cardSpeedPair.Value * TimeMoving;
+                        CardUi card = cardSpeedPair.Key;
+                        card.position += cardSpeedPair.Value * TimeMoving;
+                        card.setScale(1);
                     }
                     TimeMoving = 0;
                     CardSpeeds.Clear();

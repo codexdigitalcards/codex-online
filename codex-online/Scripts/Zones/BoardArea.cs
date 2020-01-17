@@ -9,10 +9,13 @@ namespace codex_online
     {
         public event EventHandler Updated;
 
+        public static float SideBarWidth { get; } = 144;
+
         /// <summary>
         /// Does something when anything on the board is updated
         /// </summary>
-        protected virtual void OnBoardEventUpdated()
+        //TODO: make protected
+        public virtual void OnBoardEventUpdated()
         {
             Updated?.Invoke(this, EventArgs.Empty);
         }
