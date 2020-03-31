@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    class BuildingCard : Card
+    public class Base : Building
     {
+        public BaseStatus Status { get; set; }
+    }
+    public enum BaseStatus
+    {
+        Nothing,
+        Flying
     }
 }

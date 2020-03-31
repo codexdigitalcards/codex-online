@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    class Hero : Card
+    class BuildingCard : Card
     {
+        
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
+using System;
 using System.Collections.Generic;
 
 namespace codex_online
@@ -72,7 +73,8 @@ namespace codex_online
                     }
                     else if (clickedBoardArea != null)
                     {
-
+                        //TODO: remove
+                        Console.WriteLine(clickedBoardArea.GetType());
                     }
                 }
                 else if (Dragging && Input.leftMouseButtonDown)

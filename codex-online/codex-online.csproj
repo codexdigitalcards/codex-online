@@ -42,27 +42,43 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Scripts\AnimationHandler.cs" />
-    <Compile Include="Scripts\CardTypes\BuildingCard.cs" />
-    <Compile Include="Scripts\CardTypes\Hero.cs" />
-    <Compile Include="Scripts\CardTypes\Spell.cs" />
-    <Compile Include="Scripts\CardTypes\Unit.cs" />
-    <Compile Include="Scripts\CardTypes\Upgrade.cs" />
-    <Compile Include="Scripts\MouseCollider.cs" />
-    <Compile Include="Scripts\Card.cs" />
-    <Compile Include="Scripts\Ui\BaseUi.cs" />
-    <Compile Include="Scripts\Ui\BoardAreaUi.cs" />
-    <Compile Include="Scripts\Ui\CardUi.cs" />
-    <Compile Include="Scripts\Ui\HandUi.cs" />
-    <Compile Include="Scripts\Ui\InPlayUi.cs" />
-    <Compile Include="Scripts\Ui\ZoneUi.cs" />
-    <Compile Include="Scripts\Zones\Base.cs" />
-    <Compile Include="Scripts\Zones\BoardArea.cs" />
-    <Compile Include="Scripts\Zones\Hand.cs" />
-    <Compile Include="Scripts\Zones\InPlay.cs" />
-    <Compile Include="Scripts\Zones\Zone.cs" />
-    <Compile Include="Scripts\Game1.cs" />
-    <Compile Include="Scripts\Program.cs" />
+    <Compile Include="Source\GameLogic\AnimationHandler.cs" />
+    <Compile Include="Source\GameLogic\Building\AddOn.cs" />
+    <Compile Include="Source\GameLogic\Building\BaseBuilding.cs" />
+    <Compile Include="Source\GameLogic\Building\Building.cs" />
+    <Compile Include="Source\GameLogic\Building\TechBuilding.cs" />
+    <Compile Include="Source\GameLogic\Card\BuildingCard.cs" />
+    <Compile Include="Source\GameLogic\Card\Hero.cs" />
+    <Compile Include="Source\GameLogic\Card\Spell.cs" />
+    <Compile Include="Source\GameLogic\Card\Unit.cs" />
+    <Compile Include="Source\GameLogic\Card\Upgrade.cs" />
+    <Compile Include="Source\GameLogic\Player.cs" />
+    <Compile Include="Source\GameLogic\Spec.cs" />
+    <Compile Include="Source\GameLogic\Zone\Codex.cs" />
+    <Compile Include="Source\GameLogic\Zone\CommandZone.cs" />
+    <Compile Include="Source\MouseCollider.cs" />
+    <Compile Include="Source\GameLogic\Card\Card.cs" />
+    <Compile Include="Source\Ui\SideBar\Building\AddOnButton.cs" />
+    <Compile Include="Source\Ui\SideBar\Building\BaseButton.cs" />
+    <Compile Include="Source\Ui\BoardAreaUi.cs" />
+    <Compile Include="Source\Ui\CardUi.cs" />
+    <Compile Include="Source\Ui\HandUi.cs" />
+    <Compile Include="Source\Ui\InPlayUi.cs" />
+    <Compile Include="Source\Ui\SideBar\Building\BuildingButton.cs" />
+    <Compile Include="Source\Ui\SideBar\Building\TechBuildingButton.cs" />
+    <Compile Include="Source\Ui\SideBar\CodexButton.cs" />
+    <Compile Include="Source\Ui\SideBar\GoldUi.cs" />
+    <Compile Include="Source\Ui\SideBar\HeroButton.cs" />
+    <Compile Include="Source\Ui\SideBar\SideBarButton.cs" />
+    <Compile Include="Source\Ui\SideBar\SpecUi.cs" />
+    <Compile Include="Source\Ui\SideBar\ZoneButton.cs" />
+    <Compile Include="Source\GameLogic\Building\Base.cs" />
+    <Compile Include="Source\GameLogic\GameObject.cs" />
+    <Compile Include="Source\GameLogic\Zone\Hand.cs" />
+    <Compile Include="Source\GameLogic\Zone\InPlay.cs" />
+    <Compile Include="Source\GameLogic\Zone\Zone.cs" />
+    <Compile Include="Source\Game1.cs" />
+    <Compile Include="Source\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

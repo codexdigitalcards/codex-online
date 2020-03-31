@@ -27,7 +27,7 @@ namespace codex_online
         {
             this.card = card;
             addComponent(new Sprite(texture));
-            addComponent(new BoxCollider(texture.Width, texture.Height));
+            addComponent(new BoxCollider(CardWidth, CardHeight));
 
             CardToCardUiMap.Add(card, this);
         }

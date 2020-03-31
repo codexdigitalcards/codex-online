@@ -2,8 +2,12 @@
 
 namespace codex_online
 {
-    public class Card
+    public class Card : GameObject
     {
+        public String Name { get; set; }
+        public int Cost { get; set; }
+        public Zone Zone { get; set; }
+
         public Card()
         {
         }

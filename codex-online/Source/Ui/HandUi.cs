@@ -11,13 +11,13 @@ namespace codex_online
     /// <summary>
     /// UI representation of Hand. Controls movement of cards in the Hand zone
     /// </summary>
-    public class HandUi : ZoneUi
+    public class HandUi : BoardAreaUi
     {
         private static readonly float layerDepthIncriment = .0001f;
 
         public static int MaxHandSizeBeforeOverlap { get; } = 5;
         public static float HandWidth { get; } = CardUi.CardWidth * MaxHandSizeBeforeOverlap;
-        public static float SecondsToMove { get; } = 3;
+        public static float SecondsToMove { get; } = 1;
 
         protected List<CardUi> Cards { get; } = new List<CardUi>();
         protected Dictionary<CardUi, Vector2> CardSpeeds { get; } = new Dictionary<CardUi, Vector2>();
@@ -25,16 +25,7 @@ namespace codex_online
         protected float TimeMoving { get; set; } = 0;
         protected bool Animating { get; set; } = false;
         
-        protected Hand HandZone {
-            get
-            {
-                return (Hand)Zone;
-            }
-            set
-            {
-                Zone = value;
-            }
-        }
+        protected Hand HandZone { get; set; }
 
 
         /// <summary>
@@ -46,6 +37,7 @@ namespace codex_online
             HandZone = hand;
             HandZone.Updated += HandUpdated;
             position = new Vector2(Game1.ScreenWidth / 2, Game1.ScreenHeight - CardUi.CardHeight / 2);
+            addComponent(new BoxCollider(HandWidth, CardUi.CardHeight));
         }
 
         /// <summary>
@@ -99,7 +91,7 @@ namespace codex_online
             }
             else
             {
-                float distanceBetweenCards = HandWidth / Cards.Count;
+                float distanceBetweenCards = (HandWidth - CardUi.CardWidth) / (Cards.Count - 1);
                 for (int i = 0; i < Cards.Count; i++)
                 {
                     CardUi cardEntity = Cards[i];
@@ -118,7 +110,8 @@ namespace codex_online
         /// <param name="distanceBetweenCards">how close each card in hand is</param>
         protected virtual void MoveToPositionInHand(CardUi cardEntity, int index, float distanceBetweenCards)
         {
-            Vector2 destination = new Vector2(distanceBetweenCards * index + position.X - HandWidth / 2 + CardUi.CardWidth / 2, position.Y);
+            float startOfHand = position.X - HandWidth / 2 + CardUi.CardWidth / 2;
+            Vector2 destination = new Vector2(distanceBetweenCards * index + startOfHand, position.Y);
             CardSpeeds[cardEntity] = (destination - cardEntity.position) / SecondsToMove;
         }
 

@@ -8,9 +8,9 @@ namespace codex_online
     /// </summary>
     public class Hand : Zone
     {
-        public Hand()
+        public Hand(string name) : base(name)
         {
-            Cards = new List<Card>();
+            Cards = new HashSet<Card>();
         }
 
         public override ICollection<Card> GetCardsCopy()

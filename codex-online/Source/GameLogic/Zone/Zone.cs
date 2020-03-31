@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace codex_online
 {
@@ -6,14 +7,26 @@ namespace codex_online
     /// Represents a zone in the game
     /// A grouping of cards
     /// </summary>
-    public abstract class Zone : BoardArea
+    public abstract class Zone : GameObject
     {
         protected ICollection<Card> Cards;
+
+        public String Name { get; protected set; }
         
+        public Zone(String name)
+        {
+            Name = name;
+        }
+
         /// <summary>
         /// Creates a copy of Cards
         /// </summary>
         /// <returns>A copy of Cards</returns>
         public abstract ICollection<Card> GetCardsCopy();
+
+        public int Count()
+        {
+            return Cards.Count;
+        }
     }
 }

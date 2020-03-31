@@ -6,13 +6,14 @@ using System.Linq;
 
 namespace codex_online
 {
-    public class InPlayUi : ZoneUi
+    public class InPlayUi : BoardAreaUi
     {
         private static readonly float layerDepthIncriment = .0001f;
 
         public static float SpaceBetweenCards = 5;
-        public static float InPlayWidth { get; } = Game1.ScreenWidth - BoardArea.SideBarWidth;
-        public static float SecondsToMove { get; } = 3;
+        public static float InPlayWidth { get; } = Game1.ScreenWidth - SideBarButton.SideBarWidth;
+        public static float InPlayHeight { get; } = CardUi.CardHeight * 2 + SpaceBetweenCards * 3;
+        public static float SecondsToMove { get; } = 1;
         public static int MaxCardsBeforeOverlap { get; } = (int) (InPlayWidth / (CardUi.CardWidth + SpaceBetweenCards));
 
         protected List<CardUi> FrontRowCards { get; } = new List<CardUi>();
@@ -29,17 +30,7 @@ namespace codex_online
         };
         protected float TimeMoving { get; set; } = 0;
         protected bool Animating { get; set; } = false;
-        protected InPlay InPlayZone
-        {
-            get
-            {
-                return (InPlay)Zone;
-            }
-            set
-            {
-                Zone = value;
-            }
-        }
+        protected InPlay InPlayZone { get; set; }
 
 
         /// <summary>
@@ -51,8 +42,9 @@ namespace codex_online
             InPlayZone = inPlay;
             InPlayZone.Updated += InPlayUpdated;
             //TODO: move inplay to the right for space for left side buttons
-            position = new Vector2(Game1.ScreenWidth / 2 + BoardArea.SideBarWidth, Game1.ScreenHeight / 2);
+            position = new Vector2(InPlayWidth / 2 + SideBarButton.SideBarWidth, Game1.ScreenHeight / 2);
             CardRows = new List<CardUi>[] { FrontRowCards, BackRowCards };
+            addComponent(new BoxCollider(InPlayWidth, InPlayHeight));
         }
 
         /// <summary>
@@ -141,9 +133,10 @@ namespace codex_online
         /// <param name="distanceBetweenCards">how close each card in hand is</param>
         protected virtual void MoveToPositionInPlay(CardUi cardEntity, int index, int cardRowIndex)
         {
+            float starOfInPlay = position.X - InPlayWidth / 2;
             Vector2 destination = new Vector2(
                     (CardUi.CardWidth + SpaceBetweenCards) * index * TargetScale[cardRowIndex]
-                        + position.X - InPlayWidth / 2 
+                        + starOfInPlay
                         + (CardUi.CardWidth + SpaceBetweenCards) * TargetScale[cardRowIndex] / 2,
                     position.Y + (CardUi.CardHeight + SpaceBetweenCards) / 2 
                 );

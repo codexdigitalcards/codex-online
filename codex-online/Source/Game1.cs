@@ -25,23 +25,24 @@ namespace codex_online
 
         //test variables TODO: remove
         KeyboardState previousKeys;
-        static int numberOfCards = 20;
+        static int numberOfCards = 6;
         Card[] cardArrayA = new Card[numberOfCards];
         Card[] cardArrayB = new Card[numberOfCards];
         Hand hand;
         InPlay inPlay;
 
-        public Game1() : base(width: ScreenWidth, height: ScreenHeight, isFullScreen: false, enableEntitySystems: false){}
+        public Game1() : base(width: ScreenWidth - 100, height: ScreenHeight - 100, isFullScreen: false, enableEntitySystems: false){}
         
         /// <summary>
         /// Initialize game
         /// </summary>
         protected override void Initialize()
-        {
+        { 
             //initialize scene
             base.Initialize();
             Window.AllowUserResizing = true;
             Scene inGameScene = Scene.createWithDefaultRenderer(Color.CornflowerBlue);
+            inGameScene.setDesignResolution(ScreenWidth, ScreenHeight, Scene.SceneResolutionPolicy.ShowAll);
 
             //fonts
             SpriteFont baseFont = inGameScene.content.Load<SpriteFont>("Arial");
@@ -52,25 +53,19 @@ namespace codex_online
             background.addComponent(new Sprite(backgroundTexture));
             background.setPosition(new Vector2(backgroundTexture.Width / 2, backgroundTexture.Height / 2));
             background.getComponent<Sprite>().renderLayer = BoardRenderLayer;
-            
-            //Your base
-            Base gameBase = new Base();
-            BaseUi baseUi = new BaseUi(baseFont, gameBase);            
-            baseUi.setPosition(new Vector2(300f, 300f));
-            inGameScene.addEntity(baseUi);
 
             //mouse collider to check what mouse is touching
             Entity mouseCollider = inGameScene.createEntity(mouseColliderEntityName);
             mouseCollider.addComponent(new MouseCollider());
 
-            hand = new Hand();
+            hand = new Hand("Hand");
             HandUi handUi = new HandUi(hand);
             Texture2D handTexture = inGameScene.content.Load<Texture2D>(handTextureName);
             handUi.addComponent(new Sprite(handTexture));
             handUi.getComponent<Sprite>().renderLayer = BoardRenderLayer;
             inGameScene.addEntity(handUi);
 
-            inPlay = new InPlay();
+            inPlay = new InPlay("In Play");
             InPlayUi inPlayUi = new InPlayUi(inPlay);
             handUi.getComponent<Sprite>().renderLayer = BoardRenderLayer;
             inGameScene.addEntity(inPlayUi);
@@ -113,8 +108,8 @@ namespace codex_online
             scene = inGameScene;
 
             previousKeys = Keyboard.GetState();
-            hand.OnBoardEventUpdated();
-            inPlay.OnBoardEventUpdated();
+            hand.InGameEventUpdated();
+            inPlay.InGameEventUpdated();
 
 
             //remove from hand test
@@ -143,8 +138,8 @@ namespace codex_online
                     hand.AddCard(cardB);
                 }
 
-                hand.OnBoardEventUpdated();
-                inPlay.OnBoardEventUpdated();
+                hand.InGameEventUpdated();
+                inPlay.InGameEventUpdated();
             }
             
             previousKeys = state;
