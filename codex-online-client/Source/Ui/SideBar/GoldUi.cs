@@ -9,20 +9,19 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class GoldUi : BoardAreaUi
+    public class GoldUi : SideBarEntity
     {
         protected String GoldString { get; } = "Gold";
-        protected Text Gold { get; set; }
 
-        public GoldUi(NezSpriteFont font)
+        public GoldUi(NezSpriteFont font) : base(font)
         {
-            Gold = new Text(font, 0.ToString(), Vector2.Zero, Color.Black);
-            addComponent(Gold);
+            TopDisplay.text = GoldString;
+            MiddleDisplay.text = 0.ToString();
         }
 
         private void UpdateGold(int gold)
         {
-            Gold.text = gold.ToString();
+            MiddleDisplay.text = gold.ToString();
         }
     }
 }

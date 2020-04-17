@@ -7,7 +7,7 @@ namespace codex_online
     /// <summary>
     /// Game class responsible for intializing and switching between scenes
     /// </summary>
-    public class Game1
+    public class GameServer
     {
         public static int BoardRenderLayer { get; } = 1;
         public static int ScreenWidth { get; } = 1366;

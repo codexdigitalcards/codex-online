@@ -9,45 +9,39 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class HeroButton : SideBarButton
+    public class HeroButton : SideBarEntity
     {
+        private int cost;
+
         protected String CantPlay = "Can't Play";
         protected static CommandZone CommandZone { get; set; }
 
-        public Hero Hero { get; set; }
-
-        public HeroButton(NezSpriteFont font, Texture2D texture, Hero hero) : base(font)
+        public HeroButton(NezSpriteFont font, Sprite sprite, Hero hero) : base(font)
         {
-            Hero = hero;
+            cost = hero.Cost;
 
-            DisplayName.text = Hero.Name;
-            DisplayNumber.text = Hero.Cost.ToString();
+            TopDisplay.text = hero.Name;
+            MiddleDisplay.text = cost.ToString();
 
-            Hero.Updated += HeroUpdated;
-
-            addComponent(new Sprite(texture));
+            addComponent(sprite);
         }
 
-        private void HeroUpdated(object sender, EventArgs e)
+        public void HeroPlayed()
         {
-            if (Hero.Zone != CommandZone)
-            {
-                enabled = false;
-            }
-            else
-            {
-                enabled = true;
-                if (Hero.Died)
-                {
-                    DisplayNumber.text = String.Empty;
-                    DisplayStatus.text = CantPlay;
-                }
-                else
-                {
-                    DisplayNumber.text = Hero.Cost.ToString();
-                    DisplayStatus.text = String.Empty;
-                }
-            }
+            enabled = false;
+        }
+
+        public void HeroNotPlayable()
+        {
+            enabled = true;
+            MiddleDisplay.text = String.Empty;
+            BottomDisplay.text = CantPlay;
+        }
+
+        public void HeroPlayable()
+        {
+            MiddleDisplay.text = cost.ToString();
+            BottomDisplay.text = String.Empty;
         }
     }
 }

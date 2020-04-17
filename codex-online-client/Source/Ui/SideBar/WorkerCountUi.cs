@@ -8,20 +8,19 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class WorkerCountUi : BoardAreaUi
+    public class WorkerCountUi : SideBarEntity
     {
         protected String WorkersString { get; } = "Workers";
-        protected Text Workers { get; set; }
 
-        public WorkerCountUi(NezSpriteFont font, int workerCount)
+        public WorkerCountUi(NezSpriteFont font, int workerCount) : base(font)
         {
-            Workers = new Text(font, workerCount.ToString(), Vector2.Zero, Color.Black);
-            addComponent(Workers);
+            TopDisplay.text = WorkersString;
+            MiddleDisplay.text = workerCount.ToString();
         }
 
         private void UpdateWorkers(int workerCount)
         {
-            Workers.text = workerCount.ToString();
+            MiddleDisplay.text = workerCount.ToString();
         }
     }
 }

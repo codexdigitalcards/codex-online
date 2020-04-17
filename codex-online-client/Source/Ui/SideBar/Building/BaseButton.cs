@@ -14,12 +14,10 @@ namespace codex_online
         private static readonly String flying = "Flying";
         private static readonly String baseName = "Base";
 
-        protected Base GameBase { get; set; }
-
-        public BaseButton(NezSpriteFont font) : base(font)
+        public BaseButton(NezSpriteFont font, int startingHealth) : base(font)
         {
-            DisplayName.text = baseName;
-            DisplayNumber.text = GameBase.Health.ToString();
+            TopDisplay.text = baseName;
+            MiddleDisplay.text = startingHealth.ToString();
             //addComponent(new BoxCollider(texture.Width, texture.Height
         }
 
@@ -33,10 +31,10 @@ namespace codex_online
             switch (status)
             {
                 case BaseStatus.Nothing:
-                    DisplayStatus.text = String.Empty;
+                    BottomDisplay.text = String.Empty;
                     break;
                 case BaseStatus.Flying:
-                    DisplayStatus.text = flying;
+                    BottomDisplay.text = flying;
                     break;
             }
         }

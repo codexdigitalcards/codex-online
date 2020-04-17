@@ -647,3 +647,15 @@
 /processorParam:TextureFormat=Color
 /build:Cards/Black/black_starter_T0_09_sacrifice_the_weak.png
 
+#begin Cards/Black/black_hero_demonology_sidebar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Cards/Black/black_hero_demonology_sidebar.png
+

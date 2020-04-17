@@ -31,34 +31,26 @@ namespace codex_online
         /// <param name="hand"></param>
         public HandUi()
         {
-            position = new Vector2(Game1.ScreenWidth / 2, Game1.ScreenHeight - CardUi.CardHeight / 2);
+            position = new Vector2(GameClient.ScreenWidth / 2, GameClient.ScreenHeight - CardUi.CardHeight / 2);
             addComponent(new BoxCollider(HandWidth, CardUi.CardHeight));
         }
 
-        /// <summary>
-        /// When Hand zone is updated moves/removes cards away from hand
-        /// to match the changes
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void HandUpdated(object sender, EventArgs e)
+        private void RemoveCards(List<CardUi> removedCardUis)
         {
-            ICollection<Card> currentCards = ;
-            IEnumerable<CardUi> currentCardUis = currentCards.Select(cardComponent => CardUi.CardToCardUiMap[cardComponent]);
-
-            List<CardUi> removedCards = new List<CardUi>(Cards.Except(currentCardUis));
-            foreach (CardUi card in removedCards)
+            foreach (CardUi cardUi in removedCardUis)
             {
-                card.getComponent<Sprite>().layerDepth = 0;
-                Cards.Remove(card);
+                cardUi.getComponent<Sprite>().layerDepth = 0;
+                Cards.Remove(cardUi);
             }
+            OrganizeHand();
+        }
 
-            IEnumerable<CardUi> addedCards = new List<CardUi>(currentCardUis.Except(Cards));
-            foreach (CardUi card in addedCards)
+        private void AddCards(List<CardUi> addedCardUis)
+        {
+            foreach (CardUi cardUi in addedCardUis)
             {
-                Cards.Add(card);
+                Cards.Add(cardUi);
             }
-
             OrganizeHand();
         }
 

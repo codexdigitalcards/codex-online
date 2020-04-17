@@ -32,7 +32,7 @@ namespace codex_online
                     TechLevelString = three;
                     break;
             }
-            DisplayName.text = tech + TechLevelString;
+            TopDisplay.text = tech + TechLevelString;
         }
 
         private void UpdateStatus(TechBuilding techBuilding)
@@ -40,13 +40,13 @@ namespace codex_online
             switch (techBuilding.Status)
             {
                 case BaseBuildingStatus.Unbuilt:
-                    DisplayStatus.text = dollarSign + techBuilding.Price;
+                    BottomDisplay.text = dollarSign + techBuilding.Price;
                     break;
                 case BaseBuildingStatus.Building:
-                    DisplayStatus.text = Preparing;
+                    BottomDisplay.text = Preparing;
                     break;
                 case BaseBuildingStatus.Active:
-                    DisplayStatus.text = String.Empty;
+                    BottomDisplay.text = String.Empty;
                     break;
             }
         }

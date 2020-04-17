@@ -14,7 +14,7 @@ namespace codex_online
 
         public AddOnButton(NezSpriteFont font) : base(font)
         {
-            DisplayName.text = addOnString;
+            TopDisplay.text = addOnString;
         }
 
         protected void UpdateStatus(AddOn addOn)
@@ -22,13 +22,13 @@ namespace codex_online
             switch (addOn.Status)
             {
                 case BaseBuildingStatus.Building:
-                    DisplayStatus.text = addOn.Type + Environment.NewLine + Preparing;
+                    BottomDisplay.text = addOn.Type + Environment.NewLine + Preparing;
                     break;
                 case BaseBuildingStatus.Active:
-                    DisplayStatus.text = addOn.Type.ToString();
+                    BottomDisplay.text = addOn.Type.ToString();
                     break;
                 case BaseBuildingStatus.Unbuilt:
-                    DisplayStatus.text = string.Empty;
+                    BottomDisplay.text = string.Empty;
                     break;
             }
         }

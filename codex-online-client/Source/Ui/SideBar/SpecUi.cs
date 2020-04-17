@@ -9,34 +9,24 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class SpecUi : BoardAreaUi
+    public class SpecUi : SideBarEntity
     {
         protected String SpecTitle { get; set; } = "Spec";
         protected String ExtraSpecPrefix { get; set; } = "Tech Lab: ";
 
-        protected Text DisplayName { get; set; }
-        protected Text Spec { get; set; }
-        protected Text ExtraSpec { get; set; }
-
-        public SpecUi(NezSpriteFont font)
+        public SpecUi(NezSpriteFont font) : base(font)
         {
-            DisplayName = new Text(font, SpecTitle, Vector2.Zero, Color.Black);
-            Spec = new Text(font, string.Empty, Vector2.Zero, Color.Black);
-            ExtraSpec = new Text(font, string.Empty, Vector2.Zero, Color.Black);
-
-            addComponent(DisplayName);
-            addComponent(Spec);
-            addComponent(ExtraSpec);
+            TopDisplay.text = SpecTitle;
         }
 
         public void UpdateSpec(Spec spec)
         {
-            Spec.text = spec.Name;
+            MiddleDisplay.text = spec.Name;
         }
 
         public void UpdateExtraSpec(Spec spec)
         {
-            ExtraSpec.text = ExtraSpecPrefix + spec.Name;
+            BottomDisplay.text = ExtraSpecPrefix + spec.Name;
         }
     }
 }

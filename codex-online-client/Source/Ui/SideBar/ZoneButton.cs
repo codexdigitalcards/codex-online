@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class ZoneButton : SideBarButton
+    public class ZoneButton : SideBarEntity
     {
         public ZoneButton(NezSpriteFont font, string name, int count) : base(font)
         {
-            DisplayName.text = name;
-            DisplayNumber.text = count.ToString();
+            TopDisplay.text = name;
+            MiddleDisplay.text = count.ToString();
         }
 
         public void UpdateZone(int count)
         {
-            DisplayNumber.text = count.ToString();
+            MiddleDisplay.text = count.ToString();
         }
     }
 }

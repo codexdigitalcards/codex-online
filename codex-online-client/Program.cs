@@ -1,7 +1,7 @@
 ﻿using codex_online;
 using System;
 
-namespace codex_online_client
+namespace codex_online
 {
     /// <summary>
     /// The main class.
@@ -14,7 +14,7 @@ namespace codex_online_client
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
+            using (var game = new GameClient())
                 game.Run();
         }
     }

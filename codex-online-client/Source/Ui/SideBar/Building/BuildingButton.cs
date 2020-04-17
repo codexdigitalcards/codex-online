@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class BuildingButton : SideBarButton
+    public class BuildingButton : SideBarEntity
     {
         protected static String Preparing { get; } = "Preparing...";
 
@@ -30,11 +30,11 @@ namespace codex_online
         {
             if (Building.Health > 0)
             {
-                DisplayNumber.text = Building.Health.ToString();
+                MiddleDisplay.text = Building.Health.ToString();
             }
             else
             {
-                DisplayNumber.text = String.Empty;
+                MiddleDisplay.text = String.Empty;
             }
         }
     }
