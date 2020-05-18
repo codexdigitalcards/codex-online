@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codex_online
 {
@@ -15,33 +10,33 @@ namespace codex_online
         public static int NumberOfEntities { get; } = 30;
         public static int NumberOfColumns { get; } = 3;
 
-        public Text TopDisplay { get; set; }
-        public Text MiddleDisplay { get; set; }
-        public Text BottomDisplay { get; set; }
+        public TextComponent TopDisplay { get; set; }
+        public TextComponent MiddleDisplay { get; set; }
+        public TextComponent BottomDisplay { get; set; }
 
         public SideBarEntity(NezSpriteFont font)
         {
-            TopDisplay = new Text(font, String.Empty, Vector2.Zero, Color.Black);
-            MiddleDisplay = new Text(font, String.Empty, Vector2.Zero, Color.Black);
-            BottomDisplay = new Text(font, String.Empty, Vector2.Zero, Color.Black);
+            TopDisplay = new TextComponent(font, String.Empty, Vector2.Zero, Color.Black);
+            MiddleDisplay = new TextComponent(font, String.Empty, Vector2.Zero, Color.Black);
+            BottomDisplay = new TextComponent(font, String.Empty, Vector2.Zero, Color.Black);
 
-            addComponent(TopDisplay);
-            addComponent(MiddleDisplay);
-            addComponent(BottomDisplay);
+            AddComponent(TopDisplay);
+            AddComponent(MiddleDisplay);
+            AddComponent(BottomDisplay);
 
-            TopDisplay.horizontalOrigin = HorizontalAlign.Center;
-            MiddleDisplay.horizontalOrigin = HorizontalAlign.Center;
-            BottomDisplay.horizontalOrigin = HorizontalAlign.Center;
+            TopDisplay.HorizontalOrigin = HorizontalAlign.Center;
+            MiddleDisplay.HorizontalOrigin = HorizontalAlign.Center;
+            BottomDisplay.HorizontalOrigin = HorizontalAlign.Center;
 
-            TopDisplay.verticalOrigin = VerticalAlign.Top;
-            MiddleDisplay.verticalOrigin = VerticalAlign.Center;
-            BottomDisplay.verticalOrigin = VerticalAlign.Bottom;
+            TopDisplay.VerticalOrigin = VerticalAlign.Top;
+            MiddleDisplay.VerticalOrigin = VerticalAlign.Center;
+            BottomDisplay.VerticalOrigin = VerticalAlign.Bottom;
 
             int numberOfRows = NumberOfEntities / NumberOfColumns;
             float sideBarEntityHeight = GameClient.ScreenHeight / numberOfRows;
 
-            TopDisplay.localOffset = new Vector2(0f, -sideBarEntityHeight / 2);
-            BottomDisplay.localOffset = new Vector2(0f, sideBarEntityHeight / 2);
+            TopDisplay.LocalOffset = new Vector2(0f, -sideBarEntityHeight / 2);
+            BottomDisplay.LocalOffset = new Vector2(0f, sideBarEntityHeight / 2);
         }
     }
 }

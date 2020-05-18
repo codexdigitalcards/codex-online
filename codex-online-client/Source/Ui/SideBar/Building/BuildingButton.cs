@@ -1,11 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Nez;
+﻿using Nez;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codex_online
 {
@@ -30,11 +24,11 @@ namespace codex_online
         {
             if (Building.Health > 0)
             {
-                MiddleDisplay.text = Building.Health.ToString();
+                MiddleDisplay.Text = Building.Health.ToString();
             }
             else
             {
-                MiddleDisplay.text = String.Empty;
+                MiddleDisplay.Text = String.Empty;
             }
         }
     }

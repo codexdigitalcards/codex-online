@@ -8,8 +8,6 @@ namespace codex_online
 {
     public class InPlayUi : BoardAreaUi
     {
-        private static readonly float layerDepthIncriment = .0001f;
-
         public static float SpaceBetweenCards = 5;
         public static float InPlayWidth { get; } = GameClient.ScreenWidth - SideBarEntity.Width;
         public static float InPlayHeight { get; } = CardUi.CardHeight * 2 + SpaceBetweenCards * 3;
@@ -37,9 +35,9 @@ namespace codex_online
         /// <param name="hand"></param>
         public InPlayUi()
         {
-            position = new Vector2(InPlayWidth / 2 + SideBarEntity.Width, GameClient.ScreenHeight / 2);
+            Position = new Vector2(InPlayWidth / 2 + SideBarEntity.Width, GameClient.ScreenHeight / 2);
             CardRows = new List<CardUi>[] { FrontRowCards, BackRowCards };
-            addComponent(new BoxCollider(InPlayWidth, InPlayHeight));
+            AddComponent(new BoxCollider(InPlayWidth, InPlayHeight));
         }
 
         /// <summary>
@@ -115,7 +113,7 @@ namespace codex_online
                 for (int j = 0; j < CardRows[i].Count; j++)
                 {
                     CardUi cardEntity = CardRows[i][j];
-                    PreviousScale[i][cardEntity] = cardEntity.scale.X;
+                    PreviousScale[i][cardEntity] = cardEntity.Scale.X;
                     MoveToPositionInPlay(cardEntity, j, i);
                 }
             }
@@ -129,27 +127,27 @@ namespace codex_online
         /// <param name="distanceBetweenCards">how close each card in hand is</param>
         protected void MoveToPositionInPlay(CardUi cardEntity, int index, int cardRowIndex)
         {
-            float starOfInPlay = position.X - InPlayWidth / 2;
+            float starOfInPlay = Position.X - InPlayWidth / 2;
             Vector2 destination = new Vector2(
                     (CardUi.CardWidth + SpaceBetweenCards) * index * TargetScale[cardRowIndex]
                         + starOfInPlay
                         + (CardUi.CardWidth + SpaceBetweenCards) * TargetScale[cardRowIndex] / 2,
-                    position.Y + (CardUi.CardHeight + SpaceBetweenCards) / 2 
+                    Position.Y + (CardUi.CardHeight + SpaceBetweenCards) / 2 
                 );
-            CardSpeeds[cardEntity] = (destination - cardEntity.position) / SecondsToMove;
+            CardSpeeds[cardEntity] = (destination - cardEntity.Position) / SecondsToMove;
         }
 
-        public override void update()
+        public override void Update()
         {
-            base.update();
+            base.Update();
 
             if (Animating)
             {
-                if (TimeMoving > Time.deltaTime)
+                if (TimeMoving > Time.DeltaTime)
                 {
                     foreach (KeyValuePair<CardUi, Vector2> cardSpeedPair in CardSpeeds)
                     {
-                        cardSpeedPair.Key.position += cardSpeedPair.Value * Time.deltaTime;
+                        cardSpeedPair.Key.Position += cardSpeedPair.Value * Time.DeltaTime;
                     }
 
                     List<CardUi>[] CardRows = new List<CardUi>[] { FrontRowCards, BackRowCards };
@@ -158,24 +156,24 @@ namespace codex_online
                         for (int j = 0; j < CardRows[i].Count; j++)
                         {
                             CardUi card = CardRows[i][j];
-                            card.setScale(card.scale.X + (TargetScale[i] - PreviousScale[i][card]) * (Time.deltaTime / SecondsToMove));
+                            card.SetScale(card.Scale.X + (TargetScale[i] - PreviousScale[i][card]) * (Time.DeltaTime / SecondsToMove));
                         }
                     }
-                    TimeMoving -= Time.deltaTime;
+                    TimeMoving -= Time.DeltaTime;
                 }
                 else
                 {
                     foreach (KeyValuePair<CardUi, Vector2> cardSpeedPair in CardSpeeds)
                     {
                         CardUi card = cardSpeedPair.Key;
-                        card.position += cardSpeedPair.Value * TimeMoving;
+                        card.Position += cardSpeedPair.Value * TimeMoving;
                     }
 
                     for (int i = 0; i < 2; i++)
                     {
                         for (int j = 0; j < CardRows[i].Count; j++)
                         {
-                            CardRows[i][j].setScale(TargetScale[i]);
+                            CardRows[i][j].SetScale(TargetScale[i]);
                         }
                     }
                     

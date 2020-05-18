@@ -1,11 +1,5 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Nez;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace codex_online
 {
@@ -16,8 +10,8 @@ namespace codex_online
 
         public BaseButton(NezSpriteFont font, int startingHealth) : base(font)
         {
-            TopDisplay.text = baseName;
-            MiddleDisplay.text = startingHealth.ToString();
+            TopDisplay.Text = baseName;
+            MiddleDisplay.Text = startingHealth.ToString();
             //addComponent(new BoxCollider(texture.Width, texture.Height
         }
 
@@ -31,10 +25,10 @@ namespace codex_online
             switch (status)
             {
                 case BaseStatus.Nothing:
-                    BottomDisplay.text = String.Empty;
+                    BottomDisplay.Text = String.Empty;
                     break;
                 case BaseStatus.Flying:
-                    BottomDisplay.text = flying;
+                    BottomDisplay.Text = flying;
                     break;
             }
         }

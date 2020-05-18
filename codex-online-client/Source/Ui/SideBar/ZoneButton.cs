@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Nez;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Nez;
 
 namespace codex_online
 {
@@ -12,13 +6,13 @@ namespace codex_online
     {
         public ZoneButton(NezSpriteFont font, string name, int count) : base(font)
         {
-            TopDisplay.text = name;
-            MiddleDisplay.text = count.ToString();
+            TopDisplay.Text = name;
+            MiddleDisplay.Text = count.ToString();
         }
 
         public void UpdateZone(int count)
         {
-            MiddleDisplay.text = count.ToString();
+            MiddleDisplay.Text = count.ToString();
         }
     }
 }

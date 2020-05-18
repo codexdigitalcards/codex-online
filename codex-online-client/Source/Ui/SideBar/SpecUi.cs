@@ -2,10 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codex_online
 {
@@ -16,17 +12,17 @@ namespace codex_online
 
         public SpecUi(NezSpriteFont font) : base(font)
         {
-            TopDisplay.text = SpecTitle;
+            TopDisplay.Text = SpecTitle;
         }
 
         public void UpdateSpec(Spec spec)
         {
-            MiddleDisplay.text = spec.Name;
+            MiddleDisplay.Text = spec.Name;
         }
 
         public void UpdateExtraSpec(Spec spec)
         {
-            BottomDisplay.text = ExtraSpecPrefix + spec.Name;
+            BottomDisplay.Text = ExtraSpecPrefix + spec.Name;
         }
     }
 }

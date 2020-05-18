@@ -26,8 +26,9 @@ namespace codex_online
         public CardUi(Card card, Texture2D texture)
         {
             this.card = card;
-            addComponent(new Sprite(texture));
-            addComponent(new BoxCollider(CardWidth, CardHeight));
+            AddComponent(new SpriteRenderer(texture));
+            AddComponent(new BoxCollider(CardWidth, CardHeight));
+            Name = card.Name;
 
             CardToCardUiMap.Add(card, this);
         }

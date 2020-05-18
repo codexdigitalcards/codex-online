@@ -659,3 +659,10 @@
 /processorParam:TextureFormat=Color
 /build:Cards/Black/black_hero_demonology_sidebar.png
 
+#begin Debug.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Debug.spritefont
+

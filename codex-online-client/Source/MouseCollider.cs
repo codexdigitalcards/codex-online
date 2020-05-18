@@ -11,84 +11,111 @@ namespace codex_online
     /// Responsible for checking mouse collisions (clicks, hovers, etc) 
     /// and interpretting what they mean
     /// </summary>
-    class MouseCollider : BoxCollider, IUpdatable
+    public class MouseCollider : BoxCollider, IUpdatable
     {
-        public static int PickedUpRenderLayer { get; } = -1;
-        public static int DefaultRenderLayer { get; } = 0;
+        private readonly ClientState clientState;
+        private readonly CardListWindow cardListWindow;
 
-        protected bool Dragging { get; set; } = false;
-        protected CardUi DraggedCard { get; set; } = null;
-        protected Vector2 DragOffsetPosition { get; set; } = Vector2.Zero;
+        private bool dragging = false;
+        private CardUi draggedCard = null;
+        private Vector2 dragOffsetPosition = Vector2.Zero;
+        private CardUi cardPressed = null;
 
-        private readonly static float LowestLayerDepth = 2;
+        public MouseCollider(ClientState clientState, CardListWindow cardListWindow)
+        {
+            this.clientState = clientState;
+            this.cardListWindow = cardListWindow;
+        }
 
-        public void update()
+        public void Update()
         {
             if (!AnimationHandler.IsAnimationRunning())
             {
-                entity.setPosition(Input.mousePosition);
-                CardUi topCard = null;
-                BoardAreaUi clickedBoardArea = null;
-                float topLayerDepth = LowestLayerDepth;
-                IEnumerable<Collider> neighbors = Physics.boxcastBroadphaseExcludingSelf(this, collidesWithLayers);
-
-                if (!Dragging && Input.leftMouseButtonPressed)
+                Entity.Position = Input.MousePosition;
+                if (clientState.State == ClientState.InGame)
                 {
-                    foreach (var neighbor in neighbors)
+                    if (!dragging && Input.LeftMouseButtonPressed)
                     {
-                        CollisionResult collisionResult = new CollisionResult();
-                        if (neighbor.isTrigger)
+                        CardUi topCard = GetTopCard(CollidesWithLayers);
+
+                        if (topCard != null)
                         {
-                            continue;
-                        }
-
-                        if (collidesWith(neighbor, out collisionResult))
-                        {
-                            Entity collidedEntity = collisionResult.collider.entity;
-
-                            if (collidedEntity is CardUi)
-                            {
-                                float currentLayerDepth;
-                                currentLayerDepth = collisionResult.collider.entity.getComponent<Sprite>().layerDepth;
-
-                                if (currentLayerDepth < topLayerDepth)
-                                {
-                                    topCard = (CardUi)collidedEntity;
-                                    topLayerDepth = currentLayerDepth;
-                                }
-                            }
-                            else if (collidedEntity is BoardAreaUi)
-                            {
-                                clickedBoardArea = (BoardAreaUi)collidedEntity;
-                            }
+                            draggedCard = topCard;
+                            dragOffsetPosition = draggedCard.Position - Input.MousePosition;
+                            draggedCard.GetComponent<SpriteRenderer>().RenderLayer = LayerConstant.PickedUpRenderLayer;
+                            dragging = true;
                         }
                     }
+                    else if (dragging && Input.LeftMouseButtonDown)
+                    {
+                        //TODO: check zone colliding with
+                        //collidesWithAny(out collisionResult);
+                        draggedCard.Position = Input.MousePosition + dragOffsetPosition;
+                    }
+                    else if (dragging && !Input.LeftMouseButtonDown)
+                    {
+                        draggedCard.GetComponent<SpriteRenderer>().RenderLayer = LayerConstant.DefaultRenderLayer;
+                        dragging = false;
+                    }
+                }
 
-                    if (topCard != null)
-                    {
-                        DraggedCard = topCard;
-                        DragOffsetPosition = DraggedCard.position - Input.mousePosition;
-                        DraggedCard.getComponent<Sprite>().renderLayer = PickedUpRenderLayer;
-                        Dragging = true;
-                    }
-                    else if (clickedBoardArea != null)
-                    {
-                        //TODO: remove
-                        Console.WriteLine(clickedBoardArea.GetType());
-                    }
-                }
-                else if (Dragging && Input.leftMouseButtonDown)
+                else if(clientState.State == ClientState.CardListWindow)
                 {
-                    //TODO: check zone colliding with
-                    //collidesWithAny(out collisionResult);
-                    DraggedCard.position = Input.mousePosition + DragOffsetPosition;
-                }
-                else if (Dragging && !Input.leftMouseButtonDown)
-                {
-                    DraggedCard.getComponent<Sprite>().renderLayer = DefaultRenderLayer;
-                    Dragging = false;
+                    int physicsLayer = 0;
+                    Flags.SetFlag(ref physicsLayer, Convert.ToInt32(PhysicsLayerFlag.CardListWindow));
+                    if (Input.LeftMouseButtonPressed)
+                    {
+                        cardPressed = GetTopCard(physicsLayer);
+                    }
+                    else if(cardPressed != null && Input.LeftMouseButtonReleased)
+                    {
+                        CardUi cardReleased = GetTopCard(physicsLayer);
+                        if (cardReleased == cardPressed)
+                        {
+                            cardListWindow.SelectCard(cardPressed);
+                        }
+                        cardPressed = null;
+                    }
+                    else if(Input.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.G))
+                    {
+                        cardListWindow.OpenWindow(new List<CardUi>() { GameClient.testCard }, true);
+                    }
                 }
             }
+        }
+
+        private CardUi GetTopCard(int physicsLayer)
+        {
+            CardUi topCard = null;
+            float topLayerDepth = LayerConstant.LowestLayerDepth;
+            IEnumerable<Collider> neighbors = Physics.BoxcastBroadphaseExcludingSelf(this, physicsLayer);
+
+            foreach (var neighbor in neighbors)
+            {
+                CollisionResult collisionResult = new CollisionResult();
+                if (neighbor.IsTrigger)
+                {
+                    continue;
+                }
+
+                if (CollidesWith(neighbor, out collisionResult))
+                {
+                    Entity collidedEntity = collisionResult.Collider.Entity;
+
+                    if (collidedEntity is CardUi)
+                    {
+                        float currentLayerDepth = collidedEntity.GetComponent<SpriteRenderer>().LayerDepth;
+
+                        if (currentLayerDepth < topLayerDepth)
+                        {
+                            topCard = (CardUi)collidedEntity;
+                            topLayerDepth = currentLayerDepth;
+                        }
+                    }
+                }
+            }
+
+            return topCard;
         }
     }
 }

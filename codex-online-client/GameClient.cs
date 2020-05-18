@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Nez;
 using Nez.Sprites;
 using System;
@@ -14,7 +13,6 @@ namespace codex_online
     /// </summary>
     public class GameClient : Core
     {
-        public static int BoardRenderLayer { get; } = 1;
         public static float ScreenWidth { get; } = 1366;
         public static float ScreenHeight { get; } = 768;
 
@@ -28,11 +26,16 @@ namespace codex_online
         public GameMode GameMode { get; set; } = GameMode.OneHero;
         public TargetMethodSwitch TargetMethod { get; } = new TargetMethodSwitch();
         public GameConstants GameConstants { get; } = new GameConstants();
+        public CardListWindow CardListWindow { get; private set; }
+        public ClientState ClientState = new ClientState(ClientState.InGame);
 
         protected Scene InGameScene { get; set; }
 
         public GameClient() : base(width: Convert.ToInt32(ScreenWidth), height: Convert.ToInt32(ScreenHeight), isFullScreen: false, enableEntitySystems: false) { }
 
+        //TODO: test
+        public static Texture2D shadowBladeTexture;
+        public static CardUi testCard;
         /// <summary>
         /// Initialize game
         /// </summary>
@@ -41,20 +44,21 @@ namespace codex_online
             //initialize scene
             base.Initialize();
             Window.AllowUserResizing = true;
-            InGameScene = Scene.createWithDefaultRenderer(Color.CornflowerBlue);
-            InGameScene.setDesignResolution(Convert.ToInt32(ScreenWidth), Convert.ToInt32(ScreenHeight), Scene.SceneResolutionPolicy.ShowAll);
+            InGameScene = Scene.CreateWithDefaultRenderer(Color.CornflowerBlue);
+            InGameScene.SetDesignResolution(Convert.ToInt32(ScreenWidth), Convert.ToInt32(ScreenHeight), Scene.SceneResolutionPolicy.ShowAll);
             
-
             //background
-            Texture2D backgroundTexture = InGameScene.content.Load<Texture2D>(boardTextureName);
-            Entity background = InGameScene.createEntity(boardEntityName);
-            background.addComponent(new Sprite(backgroundTexture));
-            background.setPosition(new Vector2(backgroundTexture.Width / 2, backgroundTexture.Height / 2));
-            background.getComponent<Sprite>().renderLayer = BoardRenderLayer;
+            Texture2D backgroundTexture = InGameScene.Content.Load<Texture2D>(boardTextureName);
+            Entity background = InGameScene.CreateEntity(boardEntityName);
+            background.AddComponent(new SpriteRenderer(backgroundTexture));
+            background.Position = new Vector2(backgroundTexture.Width / 2, backgroundTexture.Height / 2);
+            background.GetComponent<SpriteRenderer>().RenderLayer = LayerConstant.BoardRenderLayer;
 
-            //mouse collider to check what mouse is touching
-            Entity mouseCollider = InGameScene.createEntity(mouseColliderEntityName);
-            mouseCollider.addComponent(new MouseCollider());
+            CardListWindow = new CardListWindow(ClientState);
+            InGameScene.AddEntity(CardListWindow);
+
+            Entity mouseCollider = InGameScene.CreateEntity(mouseColliderEntityName);
+            mouseCollider.AddComponent(new MouseCollider(ClientState, CardListWindow));
 
             Hero[] myHeroes = new Hero[3];
             Hero[] opponentHeroes = new Hero[3];
@@ -70,18 +74,39 @@ namespace codex_online
                 Name = "Hero!",
                 Cost = 2
             };
-            Texture2D vandyTexture = InGameScene.content.Load<Texture2D>("Cards/Black/black_hero_demonology_sidebar");
+            Texture2D vandyTexture = InGameScene.Content.Load<Texture2D>("Cards/Black/black_hero_demonology_sidebar");
+            shadowBladeTexture = InGameScene.Content.Load<Texture2D>("Cards/Black/black_starter_T0_03_thieving_imp");
             CardUi cardUi = new CardUi(myHeroes[0], vandyTexture);
             CardUi cardUi2 = new CardUi(opponentHeroes[0], vandyTexture);
 
-            InitializeGameComponentsUi(myHeroes, opponentHeroes);
+            List<CardUi> openWindowCards = new List<CardUi>();
+            NezSpriteFont font2 = new NezSpriteFont(InGameScene.Content.Load<SpriteFont>("Debug"));
+            for (int x = 0; x < 5; x++)
+            {
+                TextComponent text = new TextComponent(font2, x.ToString() + x.ToString()+ x.ToString(), Vector2.Zero, Color.MediumVioletRed);
 
-            scene = InGameScene;
+                CardUi cardUi3 = new CardUi(new Card() { Name = "imp" + x }, shadowBladeTexture);
+                cardUi3.Enabled = false;
+                cardUi3.AddComponent(text);
+                text.RenderLayer = -50;
+                InGameScene.AddEntity(cardUi3);
+                openWindowCards.Add(cardUi3);
+            }
+
+            CardListWindow.OpenWindow(openWindowCards, true, 3, 4);
+
+            //TODO:test
+            testCard = new CardUi(new Card() { Name = "imp" }, shadowBladeTexture);
+            InGameScene.AddEntity(testCard);
+
+            InitializeGameUiComponents(myHeroes, opponentHeroes);
+
+            Scene = InGameScene;
         }
 
-        private void InitializeGameComponentsUi(Hero[] myHeroes, Hero[] opponentHeroes)
+        private void InitializeGameUiComponents(Hero[] myHeroes, Hero[] opponentHeroes)
         {
-            NezSpriteFont font = new NezSpriteFont(InGameScene.content.Load<SpriteFont>("Arial"));
+            NezSpriteFont font = new NezSpriteFont(InGameScene.Content.Load<SpriteFont>("Arial"));
 
             BoardAreaUi[] sideBarEntities = new BoardAreaUi[SideBarEntity.NumberOfEntities];
 
@@ -91,23 +116,23 @@ namespace codex_online
             for (int x = 0; x < sideBarEntities.Length; x += sideBarEntities.Length / 2)
             {
                 HandUi handUi = new HandUi();
-                Texture2D handTexture = InGameScene.content.Load<Texture2D>(handTextureName);
-                handUi.addComponent(new Sprite(handTexture));
-                handUi.getComponent<Sprite>().renderLayer = BoardRenderLayer;
-                InGameScene.addEntity(handUi);
+                Texture2D handTexture = InGameScene.Content.Load<Texture2D>(handTextureName);
+                handUi.AddComponent(new SpriteRenderer(handTexture));
+                handUi.GetComponent<SpriteRenderer>().RenderLayer = LayerConstant.BoardRenderLayer;
+                InGameScene.AddEntity(handUi);
 
                 InPlayUi inPlayUi = new InPlayUi();
-                handUi.getComponent<Sprite>().renderLayer = BoardRenderLayer;
-                InGameScene.addEntity(inPlayUi);
+                handUi.GetComponent<SpriteRenderer>().RenderLayer = LayerConstant.BoardRenderLayer;
+                InGameScene.AddEntity(inPlayUi);
 
                 bool isOpponent = x < 15;
 
                 Hero[] currentHeroes = isOpponent ? opponentHeroes : myHeroes;
-                sideBarEntities[0 + x] = new HeroButton(font, CardUi.CardToCardUiMap[currentHeroes[0]].getComponent<Sprite>(), currentHeroes[0]);
+                sideBarEntities[0 + x] = new HeroButton(font, CardUi.CardToCardUiMap[currentHeroes[0]].GetComponent<SpriteRenderer>(), currentHeroes[0]);
                 if (GameMode == GameMode.ThreeHero)
                 {
-                    sideBarEntities[1 + x] = new HeroButton(font, CardUi.CardToCardUiMap[currentHeroes[1]].getComponent<Sprite>(), currentHeroes[1]);
-                    sideBarEntities[2 + x] = new HeroButton(font, CardUi.CardToCardUiMap[currentHeroes[2]].getComponent<Sprite>(), currentHeroes[2]);
+                    sideBarEntities[1 + x] = new HeroButton(font, CardUi.CardToCardUiMap[currentHeroes[1]].GetComponent<SpriteRenderer>(), currentHeroes[1]);
+                    sideBarEntities[2 + x] = new HeroButton(font, CardUi.CardToCardUiMap[currentHeroes[2]].GetComponent<SpriteRenderer>(), currentHeroes[2]);
                 }
 
                 sideBarEntities[3 + x] = new BaseButton(font, GameConstants.StartingBaseHealth);
@@ -128,7 +153,7 @@ namespace codex_online
                 sideBarEntities[13 + x] = new WorkerCountUi(font, currentWorkerCount);
 
                 SideBarEntity CodexButton = new SideBarEntity(font);
-                CodexButton.TopDisplay.text = Codex.CodexString;
+                CodexButton.TopDisplay.Text = Codex.CodexString;
                 sideBarEntities[14 + x] = CodexButton;
             }
 
@@ -146,16 +171,14 @@ namespace codex_online
                     BoardAreaUi currentEntity = sideBarEntities[x + y];
                     if (currentEntity != null)
                     {
-                        currentEntity.setPosition(new Vector2(
+                        currentEntity.Position = new Vector2(
                             y * sideBarEntityWidth + sideBarEntityWidth / 2,
                             verticalPosition
-                        ));
-                        InGameScene.addEntity(currentEntity);
+                        );
+                        InGameScene.AddEntity(currentEntity);
                     }
                 }
             }
         }
     }
-
-    
 }

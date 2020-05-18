@@ -16,32 +16,32 @@ namespace codex_online
         protected String CantPlay = "Can't Play";
         protected static CommandZone CommandZone { get; set; }
 
-        public HeroButton(NezSpriteFont font, Sprite sprite, Hero hero) : base(font)
+        public HeroButton(NezSpriteFont font, SpriteRenderer sprite, Hero hero) : base(font)
         {
             cost = hero.Cost;
 
-            TopDisplay.text = hero.Name;
-            MiddleDisplay.text = cost.ToString();
+            TopDisplay.Text = hero.Name;
+            MiddleDisplay.Text = cost.ToString();
 
-            addComponent(sprite);
+            AddComponent(sprite);
         }
 
         public void HeroPlayed()
         {
-            enabled = false;
+            Enabled = false;
         }
 
         public void HeroNotPlayable()
         {
-            enabled = true;
-            MiddleDisplay.text = String.Empty;
-            BottomDisplay.text = CantPlay;
+            Enabled = true;
+            MiddleDisplay.Text = String.Empty;
+            BottomDisplay.Text = CantPlay;
         }
 
         public void HeroPlayable()
         {
-            MiddleDisplay.text = cost.ToString();
-            BottomDisplay.text = String.Empty;
+            MiddleDisplay.Text = cost.ToString();
+            BottomDisplay.Text = String.Empty;
         }
     }
 }

@@ -13,8 +13,6 @@ namespace codex_online
     /// </summary>
     public class HandUi : BoardAreaUi
     {
-        private static readonly float layerDepthIncriment = .0001f;
-
         public static int MaxHandSizeBeforeOverlap { get; } = 5;
         public static float HandWidth { get; } = CardUi.CardWidth * MaxHandSizeBeforeOverlap;
         public static float SecondsToMove { get; } = 1;
@@ -31,15 +29,15 @@ namespace codex_online
         /// <param name="hand"></param>
         public HandUi()
         {
-            position = new Vector2(GameClient.ScreenWidth / 2, GameClient.ScreenHeight - CardUi.CardHeight / 2);
-            addComponent(new BoxCollider(HandWidth, CardUi.CardHeight));
+            Position = new Vector2(GameClient.ScreenWidth / 2, GameClient.ScreenHeight - CardUi.CardHeight / 2);
+            AddComponent(new BoxCollider(HandWidth, CardUi.CardHeight));
         }
 
         private void RemoveCards(List<CardUi> removedCardUis)
         {
             foreach (CardUi cardUi in removedCardUis)
             {
-                cardUi.getComponent<Sprite>().layerDepth = 0;
+                cardUi.GetComponent<SpriteRenderer>().LayerDepth = LayerConstant.DefaultLayerDepth;
                 Cards.Remove(cardUi);
             }
             OrganizeHand();
@@ -54,7 +52,6 @@ namespace codex_online
             OrganizeHand();
         }
 
-
         /// <summary>
         /// Stacks cards sequentially and fans them out
         /// </summary>
@@ -66,7 +63,7 @@ namespace codex_online
 
             foreach (CardUi card in Cards)
             {
-                PreviousScale[card] = card.scale.X;
+                PreviousScale[card] = card.Scale.X;
             }
             if (Cards.Count <= MaxHandSizeBeforeOverlap)
             {
@@ -82,12 +79,11 @@ namespace codex_online
                 for (int i = 0; i < Cards.Count; i++)
                 {
                     CardUi cardEntity = Cards[i];
-                    cardEntity.getComponent<Sprite>().layerDepth = 1 - (i * layerDepthIncriment);
+                    cardEntity.GetComponent<SpriteRenderer>().LayerDepth = 1 - (i * LayerConstant.LayerDepthIncriment);
                     MoveToPositionInHand(cardEntity, i, distanceBetweenCards);
                 }
             }
         }
-
 
         /// <summary>
         /// Moves a card to a spot in hand based on the index and distanceBetweenCards
@@ -97,34 +93,34 @@ namespace codex_online
         /// <param name="distanceBetweenCards">how close each card in hand is</param>
         protected void MoveToPositionInHand(CardUi cardEntity, int index, float distanceBetweenCards)
         {
-            float startOfHand = position.X - HandWidth / 2 + CardUi.CardWidth / 2;
-            Vector2 destination = new Vector2(distanceBetweenCards * index + startOfHand, position.Y);
-            CardSpeeds[cardEntity] = (destination - cardEntity.position) / SecondsToMove;
+            float startOfHand = Position.X - HandWidth / 2 + CardUi.CardWidth / 2;
+            Vector2 destination = new Vector2(distanceBetweenCards * index + startOfHand, Position.Y);
+            CardSpeeds[cardEntity] = (destination - cardEntity.Position) / SecondsToMove;
         }
 
-        public override void update()
+        public override void Update()
         {
-            base.update();
+            base.Update();
 
             if (Animating)
             {
-                if (TimeMoving > Time.deltaTime)
+                if (TimeMoving > Time.DeltaTime)
                 {
                     foreach (KeyValuePair<CardUi, Vector2> cardSpeedPair in CardSpeeds)
                     {
                         CardUi card = cardSpeedPair.Key;
-                        card.position += cardSpeedPair.Value * Time.deltaTime;
-                        card.setScale(card.scale.X + (1 - PreviousScale[card]) * (Time.deltaTime / SecondsToMove));
+                        card.Position += cardSpeedPair.Value * Time.DeltaTime;
+                        card.SetScale(card.Scale.X + (1 - PreviousScale[card]) * (Time.DeltaTime / SecondsToMove));
                     }
-                    TimeMoving -= Time.deltaTime;
+                    TimeMoving -= Time.DeltaTime;
                 }
                 else
                 {
                     foreach (KeyValuePair<CardUi, Vector2> cardSpeedPair in CardSpeeds)
                     {
                         CardUi card = cardSpeedPair.Key;
-                        card.position += cardSpeedPair.Value * TimeMoving;
-                        card.setScale(1);
+                        card.Position += cardSpeedPair.Value * TimeMoving;
+                        card.SetScale(1);
                     }
                     TimeMoving = 0;
                     CardSpeeds.Clear();

@@ -1,11 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Nez;
+﻿using Nez;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace codex_online
 {
@@ -15,13 +9,13 @@ namespace codex_online
 
         public GoldUi(NezSpriteFont font) : base(font)
         {
-            TopDisplay.text = GoldString;
-            MiddleDisplay.text = 0.ToString();
+            TopDisplay.Text = GoldString;
+            MiddleDisplay.Text = 0.ToString();
         }
 
         private void UpdateGold(int gold)
         {
-            MiddleDisplay.text = gold.ToString();
+            MiddleDisplay.Text = gold.ToString();
         }
     }
 }
