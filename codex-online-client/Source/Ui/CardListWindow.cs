@@ -194,7 +194,8 @@ namespace codex_online
 
             if (selectedCards.Count < minimumSelection || maximumSelection == 0)
             {
-                selectText.SetText(String.Format(selectMinimumText, minimumSelection - selectedCards.Count));
+                int cardsLeftToSelect = minimumSelection - selectedCards.Count < 0 ? 0 : minimumSelection - selectedCards.Count;
+                selectText.SetText(String.Format(selectMinimumText, cardsLeftToSelect));
             }
             else
             {

@@ -16,9 +16,12 @@ namespace codex_online
 
         public SideBarEntity(NezSpriteFont font)
         {
-            TopDisplay = new TextComponent(font, String.Empty, Vector2.Zero, Color.Black);
+            int numberOfRows = NumberOfEntities / NumberOfColumns;
+            float sideBarEntityHeight = GameClient.ScreenHeight / numberOfRows;
+
+            TopDisplay = new TextComponent(font, String.Empty, new Vector2(0f, -sideBarEntityHeight / 2), Color.Black);
             MiddleDisplay = new TextComponent(font, String.Empty, Vector2.Zero, Color.Black);
-            BottomDisplay = new TextComponent(font, String.Empty, Vector2.Zero, Color.Black);
+            BottomDisplay = new TextComponent(font, String.Empty, new Vector2(0f, sideBarEntityHeight / 2), Color.Black);
 
             AddComponent(TopDisplay);
             AddComponent(MiddleDisplay);
@@ -31,12 +34,6 @@ namespace codex_online
             TopDisplay.VerticalOrigin = VerticalAlign.Top;
             MiddleDisplay.VerticalOrigin = VerticalAlign.Center;
             BottomDisplay.VerticalOrigin = VerticalAlign.Bottom;
-
-            int numberOfRows = NumberOfEntities / NumberOfColumns;
-            float sideBarEntityHeight = GameClient.ScreenHeight / numberOfRows;
-
-            TopDisplay.LocalOffset = new Vector2(0f, -sideBarEntityHeight / 2);
-            BottomDisplay.LocalOffset = new Vector2(0f, sideBarEntityHeight / 2);
         }
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="Source\Ui\HandUi.cs" />
     <Compile Include="Source\Ui\InPlayUi.cs" />
     <Compile Include="Source\Ui\LayerConstant.cs" />
+    <Compile Include="Source\Ui\PatrolSlotUi.cs" />
     <Compile Include="Source\Ui\SideBar\Building\AddOnButton.cs" />
     <Compile Include="Source\Ui\SideBar\Building\BaseButton.cs" />
     <Compile Include="Source\Ui\SideBar\Building\BuildingButton.cs" />

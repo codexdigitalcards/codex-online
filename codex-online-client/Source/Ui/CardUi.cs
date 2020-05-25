@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Nez.Sprites;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace codex_online
     /// </summary>
     public class CardUi : Entity
     {
-        public static float CardWidth { get; } = 90;
-        public static float CardHeight { get; } = 126;
+        public static float CardWidth { get; } = 119;
+        public static float CardHeight { get; } = 112;
         public static Dictionary<Card, CardUi> CardToCardUiMap { get; } = new Dictionary<Card, CardUi>();
 
         protected Card card;
@@ -26,9 +27,13 @@ namespace codex_online
         public CardUi(Card card, Texture2D texture)
         {
             this.card = card;
+            Name = card.Name;
+
             AddComponent(new SpriteRenderer(texture));
             AddComponent(new BoxCollider(CardWidth, CardHeight));
-            Name = card.Name;
+
+            float scale = CardHeight / texture.Height;
+            LocalScale = new Vector2(scale, scale);
 
             CardToCardUiMap.Add(card, this);
         }

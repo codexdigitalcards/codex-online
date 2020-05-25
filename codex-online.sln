@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "codex-online-server", "code
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "codex-online-commons", "codex-online-commons\codex-online-commons.csproj", "{AC8E4D1C-4C0D-43B7-9FFA-DD59EC4D58FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nez", "..\Nez\Nez.Portable\Nez.csproj", "{60B7197D-D0D5-405C-90A2-A56903E9B039}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nez", "..\Nez\Nez.Portable\Nez.csproj", "{60B7197D-D0D5-405C-90A2-A56903E9B039}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "codex-test", "codex-test\codex-test.csproj", "{D9495E92-61DA-4F02-9036-F1EA4201A1CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "codex-test", "codex-test\codex-test.csproj", "{8FD69F5B-4E03-4E4E-A2B7-DFF8E20BF87E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{60B7197D-D0D5-405C-90A2-A56903E9B039}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60B7197D-D0D5-405C-90A2-A56903E9B039}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60B7197D-D0D5-405C-90A2-A56903E9B039}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9495E92-61DA-4F02-9036-F1EA4201A1CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9495E92-61DA-4F02-9036-F1EA4201A1CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9495E92-61DA-4F02-9036-F1EA4201A1CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9495E92-61DA-4F02-9036-F1EA4201A1CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FD69F5B-4E03-4E4E-A2B7-DFF8E20BF87E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FD69F5B-4E03-4E4E-A2B7-DFF8E20BF87E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FD69F5B-4E03-4E4E-A2B7-DFF8E20BF87E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FD69F5B-4E03-4E4E-A2B7-DFF8E20BF87E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

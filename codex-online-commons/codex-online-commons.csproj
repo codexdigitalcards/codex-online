@@ -63,6 +63,12 @@
     <Compile Include="Source\GameObject\Zone\Discard.cs" />
     <Compile Include="Source\GameObject\Zone\Hand.cs" />
     <Compile Include="Source\GameObject\Zone\InPlay.cs" />
+    <Compile Include="Source\GameObject\Zone\Patrol\EliteSlot.cs" />
+    <Compile Include="Source\GameObject\Zone\Patrol\LookoutSlot.cs" />
+    <Compile Include="Source\GameObject\Zone\Patrol\PatrolSlot.cs" />
+    <Compile Include="Source\GameObject\Zone\Patrol\ScavengerSlot.cs" />
+    <Compile Include="Source\GameObject\Zone\Patrol\SquadLeaderSlot.cs" />
+    <Compile Include="Source\GameObject\Zone\Patrol\TechnicianSlot.cs" />
     <Compile Include="Source\GameObject\Zone\Zone.cs" />
     <Compile Include="Source\GameConstants.cs" />
     <Compile Include="Source\Network\MethodTarget.cs" />

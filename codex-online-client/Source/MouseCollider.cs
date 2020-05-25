@@ -76,10 +76,6 @@ namespace codex_online
                         }
                         cardPressed = null;
                     }
-                    else if(Input.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.G))
-                    {
-                        cardListWindow.OpenWindow(new List<CardUi>() { GameClient.testCard }, true);
-                    }
                 }
             }
         }

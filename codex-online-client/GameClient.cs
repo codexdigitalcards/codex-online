@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Nez.Sprites;
 using System;
-using System.Collections.Generic;
 
 namespace codex_online
 {
@@ -16,12 +15,18 @@ namespace codex_online
         public static float ScreenWidth { get; } = 1366;
         public static float ScreenHeight { get; } = 768;
 
-        private static readonly string boardTextureName = "board";
-        private static readonly string boardEntityName = "board";
-        private static readonly string mouseColliderEntityName = "mouse-collider";
-        private static readonly string handTextureName = "hand-holder";
+        private readonly string boardTextureName = "board";
+        private readonly string boardEntityName = "board";
+        private readonly string mouseColliderEntityName = "mouse-collider";
+        private readonly string handTextureName = "hand-holder";
+        private readonly string squadLeaderBuff = "+1 Armor/Taunt";
+        private readonly string eliteBuff = "+1 ATK";
+        private readonly string scavengerBuff = "Dies: +1 Gold";
+        private readonly string technicianBuff = "Dies: +1 Card";
+        private readonly string lookoutBuff = "Resist 1";
 
         private bool localPlayerFirst;
+        private NezSpriteFont font;
 
         public GameMode GameMode { get; set; } = GameMode.OneHero;
         public TargetMethodSwitch TargetMethod { get; } = new TargetMethodSwitch();
@@ -33,9 +38,6 @@ namespace codex_online
 
         public GameClient() : base(width: Convert.ToInt32(ScreenWidth), height: Convert.ToInt32(ScreenHeight), isFullScreen: false, enableEntitySystems: false) { }
 
-        //TODO: test
-        public static Texture2D shadowBladeTexture;
-        public static CardUi testCard;
         /// <summary>
         /// Initialize game
         /// </summary>
@@ -60,6 +62,8 @@ namespace codex_online
             Entity mouseCollider = InGameScene.CreateEntity(mouseColliderEntityName);
             mouseCollider.AddComponent(new MouseCollider(ClientState, CardListWindow));
 
+            font = new NezSpriteFont(InGameScene.Content.Load<SpriteFont>("Arial"));
+
             Hero[] myHeroes = new Hero[3];
             Hero[] opponentHeroes = new Hero[3];
 
@@ -74,40 +78,38 @@ namespace codex_online
                 Name = "Hero!",
                 Cost = 2
             };
-            Texture2D vandyTexture = InGameScene.Content.Load<Texture2D>("Cards/Black/black_hero_demonology_sidebar");
-            shadowBladeTexture = InGameScene.Content.Load<Texture2D>("Cards/Black/black_starter_T0_03_thieving_imp");
+            Texture2D vandyTexture = InGameScene.Content.Load<Texture2D>("crop_cards/hero_demonology_crop");
+            Texture2D shadowBladeTexture = InGameScene.Content.Load<Texture2D>("crop_cards/0012_shadow_blade_crop");
             CardUi cardUi = new CardUi(myHeroes[0], vandyTexture);
             CardUi cardUi2 = new CardUi(opponentHeroes[0], vandyTexture);
 
-            List<CardUi> openWindowCards = new List<CardUi>();
-            NezSpriteFont font2 = new NezSpriteFont(InGameScene.Content.Load<SpriteFont>("Debug"));
-            for (int x = 0; x < 5; x++)
-            {
-                TextComponent text = new TextComponent(font2, x.ToString() + x.ToString()+ x.ToString(), Vector2.Zero, Color.MediumVioletRed);
-
-                CardUi cardUi3 = new CardUi(new Card() { Name = "imp" + x }, shadowBladeTexture);
-                cardUi3.Enabled = false;
-                cardUi3.AddComponent(text);
-                text.RenderLayer = -50;
-                InGameScene.AddEntity(cardUi3);
-                openWindowCards.Add(cardUi3);
-            }
-
-            CardListWindow.OpenWindow(openWindowCards, true, 3, 4);
-
-            //TODO:test
-            testCard = new CardUi(new Card() { Name = "imp" }, shadowBladeTexture);
-            InGameScene.AddEntity(testCard);
-
             InitializeGameUiComponents(myHeroes, opponentHeroes);
+            InitiliazePatrolZones();
 
             Scene = InGameScene;
         }
 
-        private void InitializeGameUiComponents(Hero[] myHeroes, Hero[] opponentHeroes)
+        private void InitiliazePatrolZones()
         {
-            NezSpriteFont font = new NezSpriteFont(InGameScene.Content.Load<SpriteFont>("Arial"));
+            int numberOfRows = 6;
+            float rowHeight = ScreenHeight / numberOfRows;
+            PatrolSlotUi[] patrolSlots = new PatrolSlotUi[5];
 
+            patrolSlots[0] = new PatrolSlotUi(typeof(SquadLeaderSlot), squadLeaderBuff, font);
+            patrolSlots[1] = new PatrolSlotUi(typeof(EliteSlot), eliteBuff, font);
+            patrolSlots[2] = new PatrolSlotUi(typeof(ScavengerSlot), scavengerBuff, font);
+            patrolSlots[3] = new PatrolSlotUi(typeof(TechnicianSlot), technicianBuff, font);
+            patrolSlots[4] = new PatrolSlotUi(typeof(LookoutSlot), lookoutBuff, font);
+
+            for (int x = 0; x < patrolSlots.Length; x++)
+            {
+                patrolSlots[x].Position = new Vector2(CardUi.CardWidth * (x - 2) + ScreenWidth / 2, rowHeight * 2.5f);
+                InGameScene.AddEntity(patrolSlots[x]);
+            }
+        }
+
+        private void InitializeGameUiComponents(Hero[] myHeroes, Hero[] opponentHeroes)
+        { 
             BoardAreaUi[] sideBarEntities = new BoardAreaUi[SideBarEntity.NumberOfEntities];
 
             int localPlayerWorkerCount = localPlayerFirst ? GameConstants.StartingWorkerCountFirstPlayer : GameConstants.StartingWorkerCountSecondPlayer;
