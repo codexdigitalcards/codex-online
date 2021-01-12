@@ -7,20 +7,21 @@ namespace codex_online
     {
         private static readonly String addOnString = "Add On";
 
-        public AddOnButton(NezSpriteFont font) : base(font)
+        public AddOnButton(NezSpriteFont font, bool owner) : base(font, owner)
         {
             TopDisplay.Text = addOnString;
+            AddComponent(new BoxCollider(CellWidth, CellHeight));
         }
 
-        protected void UpdateStatus(AddOn addOn)
+        public void UpdateStatus(BaseBuildingStatus addOnStatus, AddOnType addOnType)
         {
-            switch (addOn.Status)
+            switch (addOnStatus)
             {
                 case BaseBuildingStatus.Building:
-                    BottomDisplay.Text = addOn.Type + Environment.NewLine + Preparing;
+                    BottomDisplay.Text = addOnType + Environment.NewLine + Preparing;
                     break;
                 case BaseBuildingStatus.Active:
-                    BottomDisplay.Text = addOn.Type.ToString();
+                    BottomDisplay.Text = addOnType.ToString();
                     break;
                 case BaseBuildingStatus.Unbuilt:
                     BottomDisplay.Text = string.Empty;

@@ -4,6 +4,6 @@
     {
         
         Default = 0,
-        CardListWindow
+        WindowOpen
     }
 }

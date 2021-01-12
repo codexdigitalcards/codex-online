@@ -14,7 +14,7 @@ namespace codex_online
 
         public bool NeverBuilt { get; set; } = true;
         public TechLevel Level;
-        public int Price { get; set; }
+        public int Cost { get; set; }
     }
 
     public enum TechLevel

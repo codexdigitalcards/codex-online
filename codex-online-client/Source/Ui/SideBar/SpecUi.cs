@@ -10,7 +10,7 @@ namespace codex_online
         protected String SpecTitle { get; set; } = "Spec";
         protected String ExtraSpecPrefix { get; set; } = "Tech Lab: ";
 
-        public SpecUi(NezSpriteFont font) : base(font)
+        public SpecUi(NezSpriteFont font, bool owner) : base(font, owner)
         {
             TopDisplay.Text = SpecTitle;
         }

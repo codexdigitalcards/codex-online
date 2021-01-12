@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class Building : GameObject
+    public class Building : GameObject, IAttackable
     {
         private int health;
         public int Health

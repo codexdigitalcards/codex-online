@@ -4,7 +4,10 @@ namespace codex_online
 {
     public class LookoutSlot : PatrolSlot
     {
-        public LookoutSlot(Card card) : base(card) { }
+        public LookoutSlot() : base() 
+        {
+            Patrol = Patrol.Lookout;
+        }
 
         public override void ApplyPatrolBuff()
         {

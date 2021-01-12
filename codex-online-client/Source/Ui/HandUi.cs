@@ -33,7 +33,7 @@ namespace codex_online
             AddComponent(new BoxCollider(HandWidth, CardUi.CardHeight));
         }
 
-        private void RemoveCards(List<CardUi> removedCardUis)
+        public void RemoveCards(List<CardUi> removedCardUis)
         {
             foreach (CardUi cardUi in removedCardUis)
             {
@@ -43,7 +43,13 @@ namespace codex_online
             OrganizeHand();
         }
 
-        private void AddCards(List<CardUi> addedCardUis)
+        public void AddCard(CardUi addedCard)
+        {
+            Cards.Add(addedCard);
+            OrganizeHand();
+        }
+
+        public void AddCards(List<CardUi> addedCardUis)
         {
             foreach (CardUi cardUi in addedCardUis)
             {
@@ -109,8 +115,9 @@ namespace codex_online
                     foreach (KeyValuePair<CardUi, Vector2> cardSpeedPair in CardSpeeds)
                     {
                         CardUi card = cardSpeedPair.Key;
+                        float scale = CardUi.CardHeight / card.GetComponent<SpriteRenderer>().Sprite.SourceRect.Height;
                         card.Position += cardSpeedPair.Value * Time.DeltaTime;
-                        card.SetScale(card.Scale.X + (1 - PreviousScale[card]) * (Time.DeltaTime / SecondsToMove));
+                        card.SetLocalScale(card.Scale.X + (scale - PreviousScale[card]) * (Time.DeltaTime / SecondsToMove));
                     }
                     TimeMoving -= Time.DeltaTime;
                 }
@@ -119,8 +126,9 @@ namespace codex_online
                     foreach (KeyValuePair<CardUi, Vector2> cardSpeedPair in CardSpeeds)
                     {
                         CardUi card = cardSpeedPair.Key;
+                        float scale = CardUi.CardHeight / card.GetComponent<SpriteRenderer>().Sprite.SourceRect.Height;
                         card.Position += cardSpeedPair.Value * TimeMoving;
-                        card.SetScale(1);
+                        card.SetLocalScale(scale);
                     }
                     TimeMoving = 0;
                     CardSpeeds.Clear();

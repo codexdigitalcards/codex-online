@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class NetObject
+    public class OngoingSpell : Spell
     {
-
+        public ushort Target { get; set; }
     }
 }

@@ -4,9 +4,10 @@ namespace codex_online
 {
     public class ZoneButton : SideBarEntity
     {
-        public ZoneButton(NezSpriteFont font, string name, int count) : base(font)
+        public ZoneButton(NezSpriteFont font, Name name, int count, bool owner) : base(font, owner)
         {
-            TopDisplay.Text = name;
+            AreaName = name;
+            TopDisplay.Text = NameDictionary.Dictionary[name];
             MiddleDisplay.Text = count.ToString();
         }
 

@@ -4,7 +4,10 @@ namespace codex_online
 {
     public class SquadLeaderSlot : PatrolSlot
     {
-        public SquadLeaderSlot(Card card) : base(card) { }
+        public SquadLeaderSlot() : base() 
+        {
+            Patrol = Patrol.SquadLeader;
+        }
 
         public override void ApplyPatrolBuff()
         {

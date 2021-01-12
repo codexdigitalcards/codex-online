@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class BaseBuilding : Building
+    public abstract class BaseBuilding : Building
     {
         private BaseBuildingStatus status = BaseBuildingStatus.Unbuilt;
         public BaseBuildingStatus Status {
@@ -20,6 +20,8 @@ namespace codex_online
                 InGameEventUpdated();
             }
         }
+
+        public abstract bool Buildable();
     }
 
     public enum BaseBuildingStatus

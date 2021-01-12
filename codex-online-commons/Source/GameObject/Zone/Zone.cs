@@ -11,7 +11,8 @@ namespace codex_online
     {
         protected ICollection<Card> Cards;
 
-        public String Name { get; protected set; }
+        public Name Name { get; protected set; }
+
 
         /// <summary>
         /// Creates a copy of Cards

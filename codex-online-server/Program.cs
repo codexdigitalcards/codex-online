@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using Lidgren.Network;
+using NLog;
 using NLog.Config;
 using NLog.Targets;
 using System;
@@ -30,7 +31,8 @@ namespace codex_online
 
             LogManager.Configuration = config;
 
-            //run server
+            CodexNetServer server = new CodexNetServer(12345, new NetworkConstant());
+            NLog.LogManager.GetCurrentClassLogger().Debug("read worker: ");
         }
     }
 }

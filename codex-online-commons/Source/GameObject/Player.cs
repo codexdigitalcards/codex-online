@@ -19,6 +19,7 @@ namespace codex_online
         public TechBuilding TechTwo { get; set; }
         public TechBuilding TechThree { get; set; }
 
+        public InPlay InPlay { get; set; }
         public Hand Hand { get; set; }
         public Deck Deck { get; set; }
         public Discard Discard { get; set; }

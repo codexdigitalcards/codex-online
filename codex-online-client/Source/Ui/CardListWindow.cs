@@ -162,6 +162,7 @@ namespace codex_online
             Disable();
             selectedCards.Clear();
             cards.Clear();
+            clientState.State = ClientState.InGame;
         }
 
         public override void Update()
@@ -278,7 +279,7 @@ namespace codex_online
             );
             card.GetComponent<SpriteRenderer>().RenderLayer = LayerConstant.CardListWindowRenderLayer;
             card.GetComponent<SpriteRenderer>().LayerDepth = 1 - index * LayerConstant.LayerDepthIncriment;
-            Flags.SetFlag(ref card.GetComponent<BoxCollider>().PhysicsLayer, Convert.ToInt32(PhysicsLayerFlag.CardListWindow));
+            Flags.SetFlag(ref card.GetComponent<BoxCollider>().PhysicsLayer, Convert.ToInt32(PhysicsLayerFlag.WindowOpen));
             card.Enabled = true;
         }
         private void Disable()

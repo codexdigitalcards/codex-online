@@ -18,8 +18,11 @@ namespace codex_online
 
         protected String TechLevelString { get; set; }
 
-        public TechBuildingButton(NezSpriteFont font, TechLevel level) : base(font)
+        public TechLevel TechLevel { get; }
+
+        public TechBuildingButton(NezSpriteFont font, TechLevel level, bool owner) : base(font, owner)
         {
+            TechLevel = level;
             switch (level)
             {
                 case TechLevel.One:
@@ -33,14 +36,16 @@ namespace codex_online
                     break;
             }
             TopDisplay.Text = tech + TechLevelString;
+            AddComponent(new BoxCollider(CellWidth, CellHeight));
         }
 
-        private void UpdateStatus(TechBuilding techBuilding)
+        //TODO: buildable
+        public void UpdateBuilding(int health, bool buildable, BaseBuildingStatus buildingStatus, int cost)
         {
-            switch (techBuilding.Status)
+            switch (buildingStatus)
             {
                 case BaseBuildingStatus.Unbuilt:
-                    BottomDisplay.Text = dollarSign + techBuilding.Price;
+                    BottomDisplay.Text = dollarSign + cost;
                     break;
                 case BaseBuildingStatus.Building:
                     BottomDisplay.Text = Preparing;
@@ -49,6 +54,7 @@ namespace codex_online
                     BottomDisplay.Text = String.Empty;
                     break;
             }
+            UpdateHealth(health);
         }
     }
 }

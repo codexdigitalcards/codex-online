@@ -12,14 +12,14 @@ namespace codex_online
     public class PatrolSlotUi : BoardAreaUi
     {
         private TextComponent displayText;
-        private Type patrolType;
+        public Patrol Patrol { get; }
 
         private CardUi card;
 
-        public PatrolSlotUi(Type patrolType, String textString, NezSpriteFont font)
+        public PatrolSlotUi(Patrol patrol, Name name, String textString, NezSpriteFont font)
         {
-            this.patrolType = patrolType;
-            Name = patrolType.Name;
+            Patrol = patrol;
+            AreaName = name;
             displayText = new TextComponent(font, textString, new Vector2(0, CardUi.CardHeight / 2), Color.Black);
             displayText.SetHorizontalAlign(HorizontalAlign.Center);
             displayText.SetVerticalAlign(VerticalAlign.Bottom);

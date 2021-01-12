@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class BuildingCard : Card, IAttackable
+    public interface IAttackable
     {
-        public int Health { get; set; }
+        int Health { get; set; }
     }
 }

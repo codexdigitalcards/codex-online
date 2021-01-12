@@ -13,16 +13,30 @@ namespace codex_online
 
     public class AddOnType
     {
-        public static readonly AddOnType Surplus = new AddOnType("Surplus");
-        public static readonly AddOnType Tower = new AddOnType("Tower");
-        public static readonly AddOnType TechLab = new AddOnType("Tech Lab");
-        public static readonly AddOnType HeroesHall = new AddOnType("Heroes Hall");
+        public static AddOnType Surplus { get; } = new AddOnType(0, "Surplus");
+        public static AddOnType Tower { get; } = new AddOnType(1, "Tower");
+        public static AddOnType TechLab { get; } = new AddOnType(2, "Tech Lab");
+        public static AddOnType HeroesHall { get; } = new AddOnType(3, "Heroes Hall");
+        public static Dictionary<int, AddOnType> AddOnTypeDictionary = new Dictionary<int, AddOnType>();
 
         private String Name { get; set; }
+        public int Id { get; }
 
-        private AddOnType(string name)
+        private static int count = 0;
+        public static int Count
         {
+            get
+            {
+                return count;
+            }
+        }
+
+        private AddOnType(int id, string name)
+        {
+            Id = id;
             Name = name;
+            count++;
+            AddOnTypeDictionary.Add(id, this);
         }
 
         public override string ToString()

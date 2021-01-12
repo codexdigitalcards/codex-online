@@ -20,6 +20,8 @@ namespace codex_online
         private CardUi draggedCard = null;
         private Vector2 dragOffsetPosition = Vector2.Zero;
         private CardUi cardPressed = null;
+        private CardUi topCard = null;
+        private BoardAreaUi currentBoardArea = null;
 
         public MouseCollider(ClientState clientState, CardListWindow cardListWindow)
         {
@@ -34,42 +36,23 @@ namespace codex_online
                 Entity.Position = Input.MousePosition;
                 if (clientState.State == ClientState.InGame)
                 {
-                    if (!dragging && Input.LeftMouseButtonPressed)
-                    {
-                        CardUi topCard = GetTopCard(CollidesWithLayers);
-
-                        if (topCard != null)
-                        {
-                            draggedCard = topCard;
-                            dragOffsetPosition = draggedCard.Position - Input.MousePosition;
-                            draggedCard.GetComponent<SpriteRenderer>().RenderLayer = LayerConstant.PickedUpRenderLayer;
-                            dragging = true;
-                        }
-                    }
-                    else if (dragging && Input.LeftMouseButtonDown)
-                    {
-                        //TODO: check zone colliding with
-                        //collidesWithAny(out collisionResult);
-                        draggedCard.Position = Input.MousePosition + dragOffsetPosition;
-                    }
-                    else if (dragging && !Input.LeftMouseButtonDown)
-                    {
-                        draggedCard.GetComponent<SpriteRenderer>().RenderLayer = LayerConstant.DefaultRenderLayer;
-                        dragging = false;
-                    }
+                    CalculateCollisions(CollidesWithLayers);
+                    DragCard();
+                    currentBoardArea?.BoardClicked();
                 }
 
                 else if(clientState.State == ClientState.CardListWindow)
                 {
                     int physicsLayer = 0;
-                    Flags.SetFlag(ref physicsLayer, Convert.ToInt32(PhysicsLayerFlag.CardListWindow));
+                    Flags.SetFlag(ref physicsLayer, Convert.ToInt32(PhysicsLayerFlag.WindowOpen));
                     if (Input.LeftMouseButtonPressed)
                     {
-                        cardPressed = GetTopCard(physicsLayer);
+                        CalculateCollisions(physicsLayer);
                     }
                     else if(cardPressed != null && Input.LeftMouseButtonReleased)
                     {
-                        CardUi cardReleased = GetTopCard(physicsLayer);
+                        CalculateCollisions(physicsLayer);
+                        CardUi cardReleased = topCard;
                         if (cardReleased == cardPressed)
                         {
                             cardListWindow.SelectCard(cardPressed);
@@ -77,12 +60,15 @@ namespace codex_online
                         cardPressed = null;
                     }
                 }
+
+                topCard = null;
+                currentBoardArea = null;
             }
         }
 
-        private CardUi GetTopCard(int physicsLayer)
+        //TODO: remove side effects; return a dictionary of entities instead of void
+        private void CalculateCollisions(int physicsLayer)
         {
-            CardUi topCard = null;
             float topLayerDepth = LayerConstant.LowestLayerDepth;
             IEnumerable<Collider> neighbors = Physics.BoxcastBroadphaseExcludingSelf(this, physicsLayer);
 
@@ -98,20 +84,48 @@ namespace codex_online
                 {
                     Entity collidedEntity = collisionResult.Collider.Entity;
 
-                    if (collidedEntity is CardUi)
+                    switch (collidedEntity)
                     {
-                        float currentLayerDepth = collidedEntity.GetComponent<SpriteRenderer>().LayerDepth;
+                        case CardUi cardEntity:
+                            float currentLayerDepth = cardEntity.GetComponent<SpriteRenderer>().LayerDepth;
 
-                        if (currentLayerDepth < topLayerDepth)
-                        {
-                            topCard = (CardUi)collidedEntity;
-                            topLayerDepth = currentLayerDepth;
-                        }
+                            if (currentLayerDepth < topLayerDepth)
+                            {
+                                topCard = cardEntity;
+                                topLayerDepth = currentLayerDepth;
+                            }
+                            break;
+                        case BoardAreaUi boardAreaEntity:
+                            currentBoardArea = boardAreaEntity;
+                            break;
                     }
                 }
             }
+        }
 
-            return topCard;
+        private void DragCard()
+        {
+            if (!dragging && Input.LeftMouseButtonPressed)
+            {
+                if (topCard != null && topCard.Draggable)
+                {
+                    draggedCard = topCard;
+                    dragOffsetPosition = draggedCard.Position - Input.MousePosition;
+                    draggedCard.GetComponent<SpriteRenderer>().RenderLayer = LayerConstant.PickedUpRenderLayer;
+                    dragging = true;
+                }
+            }
+            else if (dragging && Input.LeftMouseButtonDown)
+            {
+                draggedCard.Position = Input.MousePosition + dragOffsetPosition;
+            }
+            else if (dragging && !Input.LeftMouseButtonDown)
+            {
+                draggedCard.GetComponent<SpriteRenderer>().RenderLayer = LayerConstant.DefaultRenderLayer;
+                //return if currentBoardArea is null
+                currentBoardArea.CardDropped(draggedCard);
+                dragging = false;
+            }
         }
     }
 }

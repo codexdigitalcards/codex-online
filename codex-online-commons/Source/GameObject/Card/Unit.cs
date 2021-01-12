@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace codex_online
+﻿namespace codex_online
 {
-    public class Unit : Card
+    public class Unit : FightableCard
     {
+        
     }
 }

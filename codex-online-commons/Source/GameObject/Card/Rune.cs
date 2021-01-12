@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class BuildingCard : Card, IAttackable
+    public enum Rune
     {
-        public int Health { get; set; }
+        PlusMinus,
+        Time,
+        Corpse,
+        Focus
     }
 }

@@ -8,7 +8,7 @@ namespace codex_online
         private static readonly String flying = "Flying";
         private static readonly String baseName = "Base";
 
-        public BaseButton(NezSpriteFont font, int startingHealth) : base(font)
+        public BaseButton(NezSpriteFont font, int startingHealth, bool owner) : base(font, owner)
         {
             TopDisplay.Text = baseName;
             MiddleDisplay.Text = startingHealth.ToString();
@@ -20,7 +20,7 @@ namespace codex_online
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UpdateStatus(BaseStatus status)
+        public void UpdateStatus(BaseStatus status)
         {
             switch (status)
             {

@@ -48,9 +48,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\ClientState.cs" />
     <Compile Include="Source\MouseCollider.cs" />
+    <Compile Include="Source\Network\CodexNetClient.cs" />
+    <Compile Include="Source\Network\NetworkEntity.cs" />
     <Compile Include="Source\PhysicsLayer.cs" />
     <Compile Include="Source\Setup.cs" />
-    <Compile Include="Source\TargetMethod.cs" />
     <Compile Include="Source\Ui\AnimationHandler.cs" />
     <Compile Include="Source\Ui\BoardAreaUi.cs" />
     <Compile Include="Source\Ui\CardListWindow.cs" />
@@ -59,14 +60,15 @@
     <Compile Include="Source\Ui\InPlayUi.cs" />
     <Compile Include="Source\Ui\LayerConstant.cs" />
     <Compile Include="Source\Ui\PatrolSlotUi.cs" />
+    <Compile Include="Source\Ui\RuneUi.cs" />
     <Compile Include="Source\Ui\SideBar\Building\AddOnButton.cs" />
     <Compile Include="Source\Ui\SideBar\Building\BaseButton.cs" />
     <Compile Include="Source\Ui\SideBar\Building\BuildingButton.cs" />
     <Compile Include="Source\Ui\SideBar\Building\TechBuildingButton.cs" />
-    <Compile Include="Source\Ui\SideBar\GoldUi.cs" />
     <Compile Include="Source\Ui\SideBar\HeroButton.cs" />
     <Compile Include="Source\Ui\SideBar\SideBarEntity.cs" />
     <Compile Include="Source\Ui\SideBar\SpecUi.cs" />
+    <Compile Include="Source\Ui\SideBar\VisibleZoneButton.cs" />
     <Compile Include="Source\Ui\SideBar\WorkerCountUi.cs" />
     <Compile Include="Source\Ui\SideBar\ZoneButton.cs" />
   </ItemGroup>

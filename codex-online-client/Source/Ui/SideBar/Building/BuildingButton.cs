@@ -9,7 +9,7 @@ namespace codex_online
 
         protected Building Building;
 
-        public BuildingButton(NezSpriteFont font) : base(font)
+        public BuildingButton(NezSpriteFont font, bool owner) : base(font, owner)
         {
             //addComponent(new BoxCollider(texture.Width, texture.Height));
             
@@ -20,7 +20,7 @@ namespace codex_online
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UpdateHealth(int buildingHealth)
+        public void UpdateHealth(int buildingHealth)
         {
             if (Building.Health > 0)
             {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace codex_online.Scripts.CardTypes
+namespace codex_online
 {
-    class Spell : Card
+    public class Spell : Card
     {
     }
 }

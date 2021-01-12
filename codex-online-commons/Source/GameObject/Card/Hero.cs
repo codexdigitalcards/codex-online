@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class Hero : Card
+    public class Hero : FightableCard
     {
         public bool Died { get; set; } = false;
     }

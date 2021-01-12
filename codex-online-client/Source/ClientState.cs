@@ -5,8 +5,8 @@ namespace codex_online
 {
     public class ClientState
     {
-        public static int InGame = 0;
-        public static int CardListWindow = 1;
+        public static readonly int InGame = 0;
+        public static readonly int CardListWindow = 1;
         public static List<int> AllStates { get; } = new List<int>() { InGame, CardListWindow };
 
         private int state;

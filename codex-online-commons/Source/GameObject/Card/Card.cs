@@ -1,15 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace codex_online
 {
-    public class Card : GameObject
+    public abstract class Card : GameObject
     {
-        public String Name { get; set; }
+        public Dictionary<Rune, int> Runes { get; } = new Dictionary<Rune, int>();
+
+        public Name Name { get; set; }
         public int Cost { get; set; }
         public Zone Zone { get; set; }
-
-        public Card()
+        public bool Tapped { get; set; }
+        public Player Controller { get; set; }
+        public List<Ability> Abilities { get; } = new List<Ability>();
+        public virtual bool Playble()
         {
+            //TODO
+            return true;
+        }
+
+        public virtual bool CanAttack()
+        {
+            return false;
         }
 
         public static bool StaysInPlay(Card card)

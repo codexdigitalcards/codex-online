@@ -8,11 +8,16 @@ namespace codex_online
 {
     public class InPlay : Zone
     {
-        private static readonly string inPlayString = "In Play";
-
+        public SquadLeaderSlot SquadLeader { get; } = new SquadLeaderSlot();
+        public EliteSlot Elite { get; } = new EliteSlot();
+        public ScavengerSlot Scavenger { get; } = new ScavengerSlot();
+        public TechnicianSlot Technician { get; } = new TechnicianSlot();
+        public LookoutSlot Lookout { get; } = new LookoutSlot();
+        public List<PatrolSlot> PatrolZone;
         public InPlay()
         {
-            Name = inPlayString;
+            PatrolZone = new List<PatrolSlot> { SquadLeader, Elite, Scavenger, Technician, Lookout };
+            Name = Name.InPlay;
             Cards = new HashSet<Card>();
         }
 

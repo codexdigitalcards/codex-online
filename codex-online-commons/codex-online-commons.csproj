@@ -43,6 +43,11 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\GameMode.cs" />
+    <Compile Include="Source\GameObject\Card\Ability.cs" />
+    <Compile Include="Source\GameObject\Card\OngoingSpell.cs" />
+    <Compile Include="Source\GameObject\Name.cs" />
+    <Compile Include="Source\GameObject\Card\Rune.cs" />
+    <Compile Include="Source\GameObject\IAttackable.cs" />
     <Compile Include="Source\GameObject\Building\AddOn.cs" />
     <Compile Include="Source\GameObject\Building\Base.cs" />
     <Compile Include="Source\GameObject\Building\BaseBuilding.cs" />
@@ -50,6 +55,7 @@
     <Compile Include="Source\GameObject\Building\TechBuilding.cs" />
     <Compile Include="Source\GameObject\Card\BuildingCard.cs" />
     <Compile Include="Source\GameObject\Card\Card.cs" />
+    <Compile Include="Source\GameObject\Card\FightableCard.cs" />
     <Compile Include="Source\GameObject\Card\Hero.cs" />
     <Compile Include="Source\GameObject\Card\Spell.cs" />
     <Compile Include="Source\GameObject\Card\Unit.cs" />
@@ -70,10 +76,11 @@
     <Compile Include="Source\GameObject\Zone\Patrol\SquadLeaderSlot.cs" />
     <Compile Include="Source\GameObject\Zone\Patrol\TechnicianSlot.cs" />
     <Compile Include="Source\GameObject\Zone\Zone.cs" />
-    <Compile Include="Source\GameConstants.cs" />
-    <Compile Include="Source\Network\MethodTarget.cs" />
-    <Compile Include="Source\Network\NetObject.cs" />
-    <Compile Include="Source\Network\TargetMethod.cs" />
+    <Compile Include="Source\GameConstant.cs" />
+    <Compile Include="Source\Network\MethodClientTarget.cs" />
+    <Compile Include="Source\Network\MethodServerTarget.cs" />
+    <Compile Include="Source\Network\NetworkConstant.cs" />
+    <Compile Include="Source\Phase.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

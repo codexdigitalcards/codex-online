@@ -9,7 +9,7 @@ namespace codex_online
     public class InPlayUi : BoardAreaUi
     {
         public static float SpaceBetweenCards = 5;
-        public static float InPlayWidth { get; } = GameClient.ScreenWidth - SideBarEntity.Width;
+        public static float InPlayWidth { get; } = GameClient.ScreenWidth - SideBarEntity.TotalWidth;
         public static float InPlayHeight { get; } = CardUi.CardHeight * 2 + SpaceBetweenCards * 3;
         public static float SecondsToMove { get; } = 1;
         public static int MaxCardsBeforeOverlap { get; } = (int) (InPlayWidth / (CardUi.CardWidth + SpaceBetweenCards));
@@ -35,9 +35,14 @@ namespace codex_online
         /// <param name="hand"></param>
         public InPlayUi()
         {
-            Position = new Vector2(InPlayWidth / 2 + SideBarEntity.Width, GameClient.ScreenHeight / 2);
+            Position = new Vector2(InPlayWidth / 2 + SideBarEntity.TotalWidth, GameClient.ScreenHeight / 2);
             CardRows = new List<CardUi>[] { FrontRowCards, BackRowCards };
             AddComponent(new BoxCollider(InPlayWidth, InPlayHeight));
+        }
+
+        public void AddCard(CardUi card)
+        {
+            //TODO:make sure you don't add the same card twice
         }
 
         /// <summary>

@@ -3,19 +3,16 @@ using System;
 
 namespace codex_online
 {
-    public class WorkerCountUi : SideBarEntity
+    public class WorkerCountUi : VisibleZoneButton
     {
-        protected String WorkersString { get; } = "Workers";
-
-        public WorkerCountUi(NezSpriteFont font, int workerCount) : base(font)
+        public WorkerCountUi(NezSpriteFont font, CodexNetClient networkClient, bool owner) : base(font, codex_online.Name.Worker, 0, owner)
         {
-            TopDisplay.Text = WorkersString;
-            MiddleDisplay.Text = workerCount.ToString();
+            NetworkClient = networkClient;
         }
 
-        private void UpdateWorkers(int workerCount)
+        public override void CardDropped(CardUi card)
         {
-            MiddleDisplay.Text = workerCount.ToString();
+            NetworkClient.SendWorker(card.CardId);
         }
     }
 }

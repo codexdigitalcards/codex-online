@@ -4,7 +4,10 @@ namespace codex_online
 {
     public class EliteSlot : PatrolSlot
     {
-        public EliteSlot(Card card) : base(card) { }
+        public EliteSlot() : base() 
+        {
+            Patrol = Patrol.Elite;
+        }
 
         public override void ApplyPatrolBuff()
         {

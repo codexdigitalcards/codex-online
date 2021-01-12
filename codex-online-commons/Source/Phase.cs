@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public enum MethodTarget
+    public enum Phase
     {
-
+        Ready,
+        Upkeep,
+        Main,
+        Patrol,
+        Draw,
+        Tech
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Nez;
 using Nez.Sprites;
 using System;
@@ -14,16 +15,22 @@ namespace codex_online
         private int cost;
 
         protected String CantPlay = "Can't Play";
-        protected static CommandZone CommandZone { get; set; }
 
-        public HeroButton(NezSpriteFont font, SpriteRenderer sprite, Hero hero) : base(font)
+        private bool outOfPlay = true;
+        public CardUi Hero { get; }
+
+        public HeroButton(NezSpriteFont font, SpriteRenderer sprite, CardUi hero, bool owner) : base(font, owner)
         {
+            Hero = hero;
             cost = hero.Cost;
 
-            TopDisplay.Text = hero.Name;
+            TopDisplay.Text = hero.CardName;
             MiddleDisplay.Text = cost.ToString();
-
+            
             AddComponent(sprite);
+            float scale = TotalWidth / NumberOfColumns / sprite.Width;
+            LocalScale = new Vector2(scale, scale);
+            AddComponent(new BoxCollider(sprite.Width, sprite.Height));
         }
 
         public void HeroPlayed()
@@ -40,6 +47,8 @@ namespace codex_online
 
         public void HeroPlayable()
         {
+            Hero.Enabled = false;
+            Enabled = true;
             MiddleDisplay.Text = cost.ToString();
             BottomDisplay.Text = String.Empty;
         }

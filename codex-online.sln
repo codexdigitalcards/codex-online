@@ -5,13 +5,13 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "codex-online-client", "codex-online-client\codex-online-client.csproj", "{1EE4EE35-EBE9-4057-8FAD-C26AA5C5E06D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "codex-online-server", "codex-online-server\codex-online-server.csproj", "{2550225F-2CCD-4484-8BB4-BF0C7B94DF59}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "codex-online-commons", "codex-online-commons\codex-online-commons.csproj", "{AC8E4D1C-4C0D-43B7-9FFA-DD59EC4D58FD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nez", "..\Nez\Nez.Portable\Nez.csproj", "{60B7197D-D0D5-405C-90A2-A56903E9B039}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "codex-test", "codex-test\codex-test.csproj", "{8FD69F5B-4E03-4E4E-A2B7-DFF8E20BF87E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "codex-online-server", "codex-online-server\codex-online-server.csproj", "{3F9A8289-8C7A-49FA-8EA3-86FD1EA9A8C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{1EE4EE35-EBE9-4057-8FAD-C26AA5C5E06D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EE4EE35-EBE9-4057-8FAD-C26AA5C5E06D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EE4EE35-EBE9-4057-8FAD-C26AA5C5E06D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2550225F-2CCD-4484-8BB4-BF0C7B94DF59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2550225F-2CCD-4484-8BB4-BF0C7B94DF59}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2550225F-2CCD-4484-8BB4-BF0C7B94DF59}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2550225F-2CCD-4484-8BB4-BF0C7B94DF59}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC8E4D1C-4C0D-43B7-9FFA-DD59EC4D58FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC8E4D1C-4C0D-43B7-9FFA-DD59EC4D58FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC8E4D1C-4C0D-43B7-9FFA-DD59EC4D58FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{8FD69F5B-4E03-4E4E-A2B7-DFF8E20BF87E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FD69F5B-4E03-4E4E-A2B7-DFF8E20BF87E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FD69F5B-4E03-4E4E-A2B7-DFF8E20BF87E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F9A8289-8C7A-49FA-8EA3-86FD1EA9A8C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F9A8289-8C7A-49FA-8EA3-86FD1EA9A8C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F9A8289-8C7A-49FA-8EA3-86FD1EA9A8C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F9A8289-8C7A-49FA-8EA3-86FD1EA9A8C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

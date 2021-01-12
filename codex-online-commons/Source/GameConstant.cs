@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace codex_online
 {
-    public class GameConstants
+    public class GameConstant
     {
         public int StartingBaseHealth { get; } = 20;
         public int StartingDeckSize { get; } = 10;
