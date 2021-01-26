@@ -11,7 +11,7 @@
         Worker,
         Deck,
         Discard,
-        Gold
+        Gold,
         PhaseTurn,
         RequestTarget,
         RequestOption

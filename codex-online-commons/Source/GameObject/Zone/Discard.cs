@@ -8,11 +8,9 @@ namespace codex_online
 {
     public class Discard : Zone
     {
-        public static string DiscardString { get; } = "Discard";
-
         public Discard()
         {
-            Name = DiscardString;
+            Name = Name.Discard;
             Cards = new List<Card>();
         }
 

@@ -8,11 +8,9 @@ namespace codex_online
 {
     public class CommandZone : Zone
     {
-        private static readonly string commandString = "Command Zone";
-
         public CommandZone()
         {
-            Name = commandString;
+            Name = Name.CommandZone;
             Cards = new List<Card>();
         }
 

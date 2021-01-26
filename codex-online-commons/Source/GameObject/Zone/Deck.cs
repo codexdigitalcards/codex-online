@@ -8,11 +8,9 @@ namespace codex_online
 {
     public class Deck : Zone
     {
-        public static string DeckString { get; } = "Deck";
-
         public Deck()
         {
-            Name = DeckString;
+            Name = Name.Deck;
             Cards = new List<Card>();
         }
 

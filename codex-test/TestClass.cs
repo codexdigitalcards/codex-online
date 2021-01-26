@@ -21,15 +21,15 @@ namespace codex_test
             thr.Start();
             SpinWait.SpinUntil(() => GameClient.Scene != null);
 
-            CodexNetServer server = new CodexNetServer(12345, new NetworkConstant());
-            Thread serverThread = new Thread(new ThreadStart(server.ListenForMessages));
-            serverThread.Start();
-            SpinWait.SpinUntil(() => server.Status == NetPeerStatus.Running);
+            CodexNetServer server = new CodexNetServer(12345, new NetworkConstant(), new Player(), new Player());
+            
 
             //PatrolTest(client);
             //CardListWindowTest(client, 25, 5, 0);
             //NetworkTest(client);
-            WorkerNetworkTest(client, server);
+            //WorkerNetworkTest(client, server);
+            //HandTest(9);
+            PlayCardsTest(14);
         }
 
         private static void CardListWindowTest(GameClient client, int numberOfCards, int minimumCards, int maximumCards)
@@ -37,7 +37,7 @@ namespace codex_test
             Scene InGameScene = GameClient.Scene;
             Texture2D shadowBladeTexture = InGameScene.Content.Load<Texture2D>("crop_cards/0012_shadow_blade_crop");
 
-            CardUi testCard = new CardUi(3, "shadowblade", shadowBladeTexture);
+            CardUi testCard = new CardUi(3000, Name.TimelyMessenger, shadowBladeTexture);
             InGameScene.AddEntity(testCard);
 
             List<CardUi> openWindowCards = new List<CardUi>();
@@ -45,8 +45,8 @@ namespace codex_test
             for (int x = 0; x < numberOfCards; x++)
             {
                 TextComponent text = new TextComponent(font2, x.ToString() + x.ToString() + x.ToString(), Vector2.Zero, Color.MediumVioletRed);
-
-                CardUi cardUi3 = new CardUi(4, "shadowblade", shadowBladeTexture)
+                
+                CardUi cardUi3 = new CardUi(Convert.ToUInt16(4000 + x), Name.TimelyMessenger, shadowBladeTexture)
                 {
                     Enabled = false
                 };
@@ -68,11 +68,56 @@ namespace codex_test
 
             for (int x = 0; x < 5; x++)
             {
-                CardUi testCard = new CardUi(Convert.ToUInt16(2+x), "shadowblade", shadowBladeTexture);
+                CardUi testCard = new CardUi(Convert.ToUInt16(2000+x), Name.TimelyMessenger, shadowBladeTexture);
                 InGameScene.AddEntity(testCard);
                 InGameScene.EntitiesOfType<PatrolSlotUi>()[x].PatrolCard(testCard);
             }
             
+        }
+
+        private static void HandTest(int numberOfCards)
+        {
+            Scene InGameScene = GameClient.Scene;
+            Texture2D shadowBladeTexture = InGameScene.Content.Load<Texture2D>("crop_cards/0012_shadow_blade_crop");
+
+            for (int x = 0; x < numberOfCards; x++)
+            {
+                CardUi testCard = new CardUi(Convert.ToUInt16(2000 + x), Name.TimelyMessenger, shadowBladeTexture);
+                InGameScene.AddEntity(testCard);
+                InGameScene.EntitiesOfType<HandUi>()[0].AddCard(testCard);
+
+                if (x == numberOfCards / 2)
+                {
+                    Thread.Sleep(1000 * (int)CardRowUi.SecondsToMove);
+                }
+            }
+
+        }
+
+        private static void PlayCardsTest(int numberOfCards)
+        {
+            Scene InGameScene = GameClient.Scene;
+            Texture2D shadowBladeTexture = InGameScene.Content.Load<Texture2D>("crop_cards/0012_shadow_blade_crop");
+            List<CardUi> cards = new List<CardUi>();
+            for (int x = 0; x < numberOfCards; x++)
+            {
+                CardUi testCard = new CardUi(Convert.ToUInt16(2000 + x), Name.TimelyMessenger, shadowBladeTexture);
+                InGameScene.AddEntity(testCard);
+                cards.Add(testCard);
+            }
+
+            foreach (var card in cards)
+            {
+                InGameScene.EntitiesOfType<HandUi>()[0].AddCard(card);
+            }
+
+            Thread.Sleep(1000 * (int)CardRowUi.SecondsToMove);
+
+            foreach (var card in cards)
+            {
+                InGameScene.EntitiesOfType<InPlayUi>()[0].AddCard(card);
+            }
+
         }
 
         private static void NetworkTest(GameClient client)
@@ -90,7 +135,7 @@ namespace codex_test
 
             while (true)
             {
-                client.NetworkClient.SendGameAction(MethodServerTarget.Worker, new Card[] { unit });
+                //client.NetworkClient.SendGameAction(MethodServerTarget.Worker, new Card[] { unit });
                 System.Threading.Thread.Sleep(1000);
                 NetIncomingMessage message;
                 if ((message = server.ReadMessage()) != null)
@@ -122,9 +167,9 @@ namespace codex_test
         {
             Scene InGameScene = GameClient.Scene;
             Texture2D shadowBladeTexture = InGameScene.Content.Load<Texture2D>("crop_cards/0012_shadow_blade_crop");
-            CardUi testCard = new CardUi(2, "shadowblade", shadowBladeTexture);
+            CardUi testCard = new CardUi(2000, Name.TimelyMessenger, shadowBladeTexture);
             InGameScene.AddEntity(testCard);
-            InGameScene.EntitiesOfType<HandUi>()[0].AddCards(new List<CardUi>() { testCard });
+            InGameScene.EntitiesOfType<HandUi>()[0].AddCard(testCard);
         }
     }
 }

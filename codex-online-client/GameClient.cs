@@ -74,12 +74,12 @@ namespace codex_online
             //TODO: remove test data
             Texture2D vandyTexture = InGameScene.Content.Load<Texture2D>("crop_cards/hero_demonology_crop");
             Texture2D shadowBladeTexture = InGameScene.Content.Load<Texture2D>("crop_cards/0012_shadow_blade_crop");
-            myHeroes.Add(new CardUi(0, "Hero", vandyTexture));
-            myHeroes.Add(new CardUi(1, "Hero", vandyTexture));
-            myHeroes.Add(new CardUi(2, "Hero", vandyTexture));
-            oppHeroes.Add(new CardUi(3, "Hero", vandyTexture));
-            oppHeroes.Add(new CardUi(4, "Hero", vandyTexture));
-            oppHeroes.Add(new CardUi(5, "Hero", vandyTexture));
+            myHeroes.Add(new CardUi(0, Name.TimelyMessenger, vandyTexture));
+            myHeroes.Add(new CardUi(1, Name.TimelyMessenger, vandyTexture));
+            myHeroes.Add(new CardUi(2, Name.TimelyMessenger, vandyTexture));
+            oppHeroes.Add(new CardUi(3, Name.TimelyMessenger, vandyTexture));
+            oppHeroes.Add(new CardUi(4, Name.TimelyMessenger, vandyTexture));
+            oppHeroes.Add(new CardUi(5, Name.TimelyMessenger, vandyTexture));
 
             InitializeGameUiComponents(myHeroes, oppHeroes);
             InitiliazePatrolZones();
@@ -119,8 +119,7 @@ namespace codex_online
             int localPlayerWorkerCount = localPlayerFirst ? GameConstants.StartingWorkerCountFirstPlayer : GameConstants.StartingWorkerCountSecondPlayer;
             int opponentWorkerCount = localPlayerFirst ? GameConstants.StartingWorkerCountSecondPlayer : GameConstants.StartingWorkerCountFirstPlayer;
 
-            InPlayUi inPlayUi = new InPlayUi();
-            inPlayUi.GetComponent<SpriteRenderer>().RenderLayer = LayerConstant.BoardRenderLayer;
+            InPlayUi inPlayUi = new InPlayUi(2);
             InGameScene.AddEntity(inPlayUi);
 
             HandUi handUi = new HandUi();

@@ -8,11 +8,9 @@ namespace codex_online
 {
     public class Codex : Zone
     {
-        public static string CodexString { get; } = "Codex";
-
         public Codex()
         {
-            Name = CodexString;
+            Name = Name.Codex;
             Cards = new HashSet<Card>();
         }
 

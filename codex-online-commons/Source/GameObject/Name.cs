@@ -36,6 +36,12 @@ namespace codex_online
             { Name.Deck, "Deck"},
             { Name.CommandZone, "Command Zone"},
             { Name.Worker, "Worker"},
+            { Name.Codex, "Codex"},
+            { Name.Gold, "Gold" },
+            { Name.SquadLeader, "SquadLeader"},
+            { Name.Scavenger, "Scavenger" },
+            { Name.Technician, "Technician"},
+            { Name.Lookout, "Lookout" },
 
             { Name.TimelyMessenger, "Timely Messenger"},
             

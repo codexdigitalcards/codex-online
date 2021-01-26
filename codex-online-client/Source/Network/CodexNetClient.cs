@@ -23,7 +23,7 @@ namespace codex_online
         {
             NetIncomingMessage message;
 
-            if ((message = ReadMessage()) == null)
+            if ((message = ReadMessage()) != null)
             {
                 switch (message.MessageType)
                 {

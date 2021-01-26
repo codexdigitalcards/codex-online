@@ -55,6 +55,7 @@
     <Compile Include="Source\Ui\AnimationHandler.cs" />
     <Compile Include="Source\Ui\BoardAreaUi.cs" />
     <Compile Include="Source\Ui\CardListWindow.cs" />
+    <Compile Include="Source\Ui\CardRowUi.cs" />
     <Compile Include="Source\Ui\CardUi.cs" />
     <Compile Include="Source\Ui\HandUi.cs" />
     <Compile Include="Source\Ui\InPlayUi.cs" />

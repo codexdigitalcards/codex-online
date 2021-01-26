@@ -24,7 +24,7 @@ namespace codex_online
             Hero = hero;
             cost = hero.Cost;
 
-            TopDisplay.Text = hero.CardName;
+            TopDisplay.Text = NameDictionary.Dictionary[hero.CardName];
             MiddleDisplay.Text = cost.ToString();
             
             AddComponent(sprite);

@@ -31,7 +31,7 @@ namespace codex_online
 
             LogManager.Configuration = config;
 
-            CodexNetServer server = new CodexNetServer(12345, new NetworkConstant());
+            CodexNetServer server = new CodexNetServer(12345, new NetworkConstant(), new Player(), new Player());
             NLog.LogManager.GetCurrentClassLogger().Debug("read worker: ");
         }
     }

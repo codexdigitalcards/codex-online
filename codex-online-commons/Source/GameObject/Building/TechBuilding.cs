@@ -15,6 +15,11 @@ namespace codex_online
         public bool NeverBuilt { get; set; } = true;
         public TechLevel Level;
         public int Cost { get; set; }
+
+        public override bool Buildable()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum TechLevel
